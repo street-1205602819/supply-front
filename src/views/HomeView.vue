@@ -1,12 +1,20 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const router = useRouter()
+const route = useRoute()
+const store = useStore()
+const menus = computed(() => store.getters.menus)
 
 const isCollapse = ref(false)
 const sideBarActive = ref('0')
 
 const onSelect = e => {
   sideBarActive.value = e
+  router.push({ name: menus.value[e].children[0].route })
 }
 
 </script>
@@ -15,17 +23,8 @@ const onSelect = e => {
   <el-container class="app-main">
     <el-aside class="sidebar">
       <el-menu :default-active="sideBarActive" class="sidebar-menu" :collapse="isCollapse" @select="onSelect">
-        <el-menu-item index="0">
-          <template #title>每日热点咨询</template>
-        </el-menu-item>
-        <el-menu-item index="1">
-          <template #title>依赖性分析</template>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <template #title>信息汇总</template>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <template #title>法律查询</template>
+        <el-menu-item v-for="(item, index) in menus" :key="index" :index="String(index)">
+          <template #title>{{ item.name }}</template>
         </el-menu-item>
       </el-menu>
     </el-aside>
