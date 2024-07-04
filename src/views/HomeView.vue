@@ -1,11 +1,10 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { RouterView } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const router = useRouter()
-const route = useRoute()
 const store = useStore()
 const menus = computed(() => store.getters.menus)
 
@@ -29,7 +28,6 @@ const onSelect = e => {
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header>Header</el-header>
       <el-main>
         <router-view></router-view>
       </el-main>
