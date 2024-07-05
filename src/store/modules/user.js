@@ -6,7 +6,7 @@ const state = {
       children: [
         {
           name: '',
-          route: 'info_list',
+          route: 'info_list'
         }
       ]
     },
@@ -16,7 +16,7 @@ const state = {
       children: [
         {
           name: '',
-          route: 'data-show',
+          route: 'data-show'
         }
       ]
     },
@@ -26,20 +26,16 @@ const state = {
       children: [
         {
           name: '',
-          route: 'edit',
+          route: 'edit'
         }
       ]
-    },
-  ],
+    }
+  ]
 }
 
-const mutations = {
+const mutations = {}
 
-}
-
-const actions = {
-
-}
+const actions = {}
 
 export default {
   namespaced: true,

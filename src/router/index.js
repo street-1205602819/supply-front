@@ -18,8 +18,8 @@ const router = createRouter({
           path: 'info_list',
           name: 'info_list',
           component: () => import('@/views/hotspot/info_list.vue'),
-          meta: { title: '每日热点咨询'}
-        },
+          meta: { title: '每日热点咨询' }
+        }
       ]
     },
     {
@@ -31,8 +31,8 @@ const router = createRouter({
           path: 'data-show',
           name: 'data-show',
           component: () => import('@/views/info-summary/data-show.vue'),
-          meta: { title: '信息汇总'}
-        },
+          meta: { title: '信息汇总' }
+        }
       ]
     },
     {
@@ -44,10 +44,10 @@ const router = createRouter({
           path: 'edit',
           name: 'edit',
           component: () => import('@/views/information/edit.vue'),
-          meta: { title: '每日咨询'}
-        },
+          meta: { title: '每日咨询上传' }
+        }
       ]
-    },
+    }
   ]
 })
 
