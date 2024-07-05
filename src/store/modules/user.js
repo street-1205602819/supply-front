@@ -20,6 +20,16 @@ const state = {
         }
       ]
     },
+    {
+      name: '每日咨询上传',
+      route: 'information',
+      children: [
+        {
+          name: '',
+          route: 'edit',
+        }
+      ]
+    },
   ],
 }
 
