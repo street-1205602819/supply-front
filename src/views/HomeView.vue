@@ -25,7 +25,7 @@ const onSelect = e => {
         <el-menu-item v-for="(item, index) in menus" :key="index" :index="String(index)">
           <template #title>{{ item.name }}</template>
         </el-menu-item>
-        <el-link class="ai-button" type="primary" href="https://www.baidu.com/" target="_blank">AI指导</el-link>
+        <el-link class="ai-button" type="primary" href="https://chatglm.cn/applyAndLogin" target="_blank">AI指导</el-link>
       </el-menu>
     </el-aside>
     <el-container>
