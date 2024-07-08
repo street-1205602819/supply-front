@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 const props = defineProps({
   show: Boolean,
   editData: Object
@@ -25,7 +25,6 @@ watch(
   () => props.editData,
   (val) => {
     formData.value = val
-    console.log(formData.value);
   }
 )
 
@@ -38,17 +37,14 @@ const onOk = () => {
 <template>
   <el-dialog v-model="dialogVisible" title="编辑" width="500">
     <el-form :model="formData" label-width="auto">
-      <el-form-item label="标题">
-        <el-input v-model="formData.title" />
+      <el-form-item label="序号">
+        <el-input v-model="formData.seq" />
       </el-form-item>
-      <el-form-item label="发布点位">
-        <el-input v-model="formData.publishAddress" />
+      <el-form-item label="涉及工作">
+        <el-input v-model="formData.referWork" />
       </el-form-item>
-      <el-form-item label="发布时间	">
-        <el-input v-model="formData.publishTime" />
-      </el-form-item>
-      <el-form-item label="敏感内容	">
-        <el-input v-model="formData.sensitiveContent" />
+      <el-form-item label="参考法律名	">
+        <el-input v-model="formData.referLaw" />
       </el-form-item>
     </el-form>
     <template #footer>

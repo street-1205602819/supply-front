@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import editDialog from './components/editDialog.vue'
 import { mockData } from './mock'
@@ -7,6 +7,11 @@ const uploadVisible = ref(false)
 const onUpload = () => {
   uploadVisible.value = true
 }
+watch(() => uploadVisible.value, val => {
+  if (!val) {
+    onSearch()
+  }
+})
 
 const form = reactive({
   publishAddress: '',
@@ -45,6 +50,9 @@ const editRow = ref({})
 const onEdit = e => {
   editDialogVisible.value = true
   editRow.value = JSON.parse(JSON.stringify(e))
+}
+const onEditOk = () => {
+  onSearch()
 }
 
 const onDelete = () => {
@@ -93,7 +101,7 @@ const onDelete = () => {
       <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
     </div>
     <uploadDialog v-model:show="uploadVisible" />
-    <editDialog v-model:show="editDialogVisible" :editData="editRow" />
+    <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" />
   </div>
 </template>
 <style scoped lang="scss">
