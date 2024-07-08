@@ -64,15 +64,9 @@ onMounted(() => {
       <li v-for="(item, index) in list" :key="index" class="info-list-item">
         <el-link class="info-title" :href="item.originalLink" target="_blank">{{ item.title }}</el-link>
         <p class="info-time">{{ item.publishAddress }} {{ item.publishTime }}</p>
-        <el-popover placement="bottom" title="" :width="200" trigger="click" content="全部文案内容">
+        <el-popover placement="bottom" title="" :width="200" trigger="click" :content="item.sensitiveContent">
           <template #reference>
-            <p class="info-content">这是一堆文案这是一堆文案这是一堆文案这是一堆文
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案案这是一堆
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案案这是一堆
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案案这是一堆
-              这是一堆文案这是一堆文案这是一堆文案这是一堆文案这是一堆文案案这是一堆文案这是一堆文案这是一堆文案这是一堆文案</p>
+            <p class="info-content">{{ item.sensitiveContent }}</p>
           </template>
         </el-popover>
       </li>

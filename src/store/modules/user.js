@@ -11,6 +11,16 @@ const state = {
       ]
     },
     {
+      name: '依赖性分析',
+      route: 'analysis',
+      children: [
+        {
+          name: '',
+          route: 'analysis_list'
+        }
+      ]
+    },
+    {
       name: '信息汇总',
       route: 'info-summary',
       children: [

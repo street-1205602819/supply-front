@@ -23,6 +23,19 @@ const router = createRouter({
       ]
     },
     {
+      path: '/analysis',
+      name: 'analysis',
+      component: HomeView,
+      children: [
+        {
+          path: 'analysis_list',
+          name: 'analysis_list',
+          component: () => import('@/views/analysis/analysis_list.vue'),
+          meta: { title: '依赖性分析' }
+        }
+      ]
+    },
+    {
       path: '/info-summary',
       name: 'info-summary',
       component: HomeView,
