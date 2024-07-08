@@ -2,6 +2,7 @@
 import { ref, onMounted, reactive, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import editDialog from './components/editDialog.vue'
+import checkDialog from '@/components/checkDialog.vue'
 import { mockData } from './mock'
 const uploadVisible = ref(false)
 const onUpload = () => {
@@ -55,7 +56,15 @@ const onEditOk = () => {
   onSearch()
 }
 
+const checkVisible = ref(false)
 const onDelete = () => {
+  if (!selectData.value.length) {
+    return
+  }
+  checkVisible.value = true
+}
+
+const onCheckOk = () => {
 
 }
 </script>
@@ -102,6 +111,7 @@ const onDelete = () => {
     </div>
     <uploadDialog v-model:show="uploadVisible" />
     <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" />
+    <checkDialog v-model:show="checkVisible" @ok="onCheckOk" />
   </div>
 </template>
 <style scoped lang="scss">

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import editDialog from './components/editDialog.vue'
+import checkDialog from '@/components/checkDialog.vue'
 import { mockData } from './mock.js'
 const tableData = ref([])
 const pageInfo = reactive({
@@ -34,6 +35,17 @@ const currentChange = (e) => {
 const onEditOk = () => {
   onSearch()
 }
+const checkVisible = ref(false)
+const onDelete = () => {
+  if (!selectData.value.length) {
+    return
+  }
+  checkVisible.value = true
+}
+
+const onCheckOk = () => {
+
+}
 
 onMounted(() => {
   onSearch()
@@ -42,6 +54,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <el-link class="info-title" type="primary" href="https://flk.npc.gov.cn/" target="_blank">跳转至国家法律法规数据库</el-link>
     <div class="operation">
       <el-button @click="onDelete" type="primary">批量删除</el-button>
     </div>
@@ -60,9 +73,16 @@ onMounted(() => {
     </el-table>
     <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
     <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" />
+    <checkDialog v-model:show="checkVisible" @ok="onCheckOk" />
   </div>
 </template>
 <style scoped lang="scss">
+.info-title {
+  line-height: 20px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
 .operation {
   margin-bottom: 8px;
 }
