@@ -27,7 +27,6 @@ const pageInfo = reactive({
 })
 
 const currentChange = (e) => {
-  console.log(e)
   pageInfo.pageNum = e
   onSearch()
 }
@@ -35,7 +34,6 @@ const currentChange = (e) => {
 const selectData = ref([])
 const onSelect = (e) => {
   selectData.value = e.map((item) => item.seq)
-  console.log(selectData.value)
 }
 
 onMounted(() => {
@@ -50,7 +48,7 @@ const onEdit = e => {
 }
 
 const onDelete = () => {
-  
+
 }
 </script>
 
@@ -76,7 +74,7 @@ const onDelete = () => {
     </el-form>
     <div class="table-container">
       <div class="operation">
-        <el-button @click="onDelete">批量删除</el-button>
+        <el-button @click="onDelete" type="primary">批量删除</el-button>
       </div>
       <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect">
         <el-table-column type="selection" width="55" fixed />
@@ -92,12 +90,8 @@ const onDelete = () => {
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
     </div>
-    <el-pagination
-      layout="prev, pager, next"
-      :total="pageInfo.total"
-      @current-change="currentChange"
-    />
     <uploadDialog v-model:show="uploadVisible" />
     <editDialog v-model:show="editDialogVisible" :editData="editRow" />
   </div>
@@ -117,9 +111,7 @@ const onDelete = () => {
 .table-container {
   width: 100%;
   height: 100%;
-  display: flex;
   margin-top: 12px;
-  flex-wrap: wrap;
 }
 
 .operation {

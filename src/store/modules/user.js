@@ -21,6 +21,16 @@ const state = {
       ]
     },
     {
+      name: '法律查询',
+      route: 'law-search',
+      children: [
+        {
+          name: '',
+          route: 'info'
+        }
+      ]
+    },
+    {
       name: '每日咨询上传',
       route: 'information',
       children: [

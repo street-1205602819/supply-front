@@ -36,6 +36,19 @@ const router = createRouter({
       ]
     },
     {
+      path: '/law-search',
+      name: 'law-search',
+      component: HomeView,
+      children: [
+        {
+          path: 'info',
+          name: 'info',
+          component: () => import('@/views/law-search/info.vue'),
+          meta: { title: '法律查询' }
+        }
+      ]
+    },
+    {
       path: '/information',
       name: 'information',
       component: HomeView,
