@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { getList } from '@/api/hotspot'
 import { mockData } from './mock'
 const form = reactive({
   publishAddress: '',
@@ -37,6 +38,7 @@ const loading = ref(false)
 
 onMounted(() => {
   onSearch()
+  getList()
 })
 </script>
 <template>
