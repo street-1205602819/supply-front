@@ -82,7 +82,7 @@ const onCheckOk = () => {
         <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable />
       </el-form-item>
       <el-form-item label="发布日期">
-        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" />
+        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" style="width: 192px" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>
@@ -120,10 +120,6 @@ const onCheckOk = () => {
   flex-wrap: wrap;
   height: 100%;
   flex-flow: column;
-}
-
-.top {
-  width: 100%;
 }
 
 .table-container {
