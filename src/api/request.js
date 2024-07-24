@@ -14,7 +14,7 @@ service.interceptors.response.use(
     if (response.config.responseType === 'blob') {
       return Promise.resolve(res)
     }
-    if (res.code !== 200) {
+    if (res.code !== 1) {
       if (response.config.requestType !== requestType.RETAIN) {
         ElMessage({
           message: res.msg || res.message || 'Error',

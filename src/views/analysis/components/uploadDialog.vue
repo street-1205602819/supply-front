@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch, reactive } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { genFileId } from 'element-plus'
+import { ElMessage } from 'element-plus'
 const props = defineProps({
   'show': Boolean,
 })
@@ -29,6 +30,14 @@ const submitUpload = () => {
   upload.value.submit()
 }
 
+const onSuccess = () => {
+  ElMessage.success('上传数据成功')
+}
+
+const onError = () => {
+  ElMessage.error('上传数据失败')
+}
+
 const form = reactive({
   tradeType: 1
 })
@@ -43,6 +52,8 @@ const tradeTypeList = [
   }
 ]
 
+const uploadUrl = import.meta.env.VITE_BASE_URL + '/risk_analysis/dependency/analysis/upload/excel'
+
 </script>
 
 <template>
@@ -54,8 +65,8 @@ const tradeTypeList = [
         </el-select>
       </el-form-item>
     </el-form>
-    <el-upload ref="upload" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" :limit="1"
-      :on-exceed="handleExceed" :auto-upload="false">
+    <el-upload ref="upload" :action="uploadUrl" :limit="1" :on-exceed="handleExceed" :auto-upload="false" :data="form"
+      :on-success="onSuccess" :on-error="onError">
       <template #trigger>
         <el-button>选择文件</el-button>
       </template>

@@ -3,6 +3,7 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
 import { getMenuValue } from '@/assets/utils'
+import { getTradeWay, getDomesticAddress, getAnalysisList } from '@/api/analysis'
 import { tradeWayCodeMock, domesticAddressCodeMock, mockData } from './mock'
 // const uploadVisible = ref(false)
 const form = reactive({
@@ -28,10 +29,10 @@ const tradeTypeList = [
 const tradeWayCodeList = ref([])
 const domesticAddressCodeList = ref([])
 const getTradeWayCodeList = async () => {
-  tradeWayCodeList.value = tradeWayCodeMock
+  tradeWayCodeList.value = await getTradeWay()
 }
 const getDomesticAddressCodeList = async () => {
-  domesticAddressCodeList.value = domesticAddressCodeMock
+  domesticAddressCodeList.value = await getDomesticAddress()
 }
 const getList = async () => {
   await getTradeWayCodeList()
@@ -54,9 +55,14 @@ const onSelect = (e) => {
   selectData.value = e.map((item) => item.seq)
 }
 
-const onSearch = () => {
-  tableData.value = mockData.data
-  pageInfo.total = mockData.total
+const onSearch = async () => {
+  const res = await getAnalysisList({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
+  tableData.value = res.data
+  pageInfo.total = res.total
 }
 
 const uploadVisible = ref(false)
@@ -96,10 +102,10 @@ onMounted(async () => {
         </el-select>
       </el-form-item>
       <el-form-item label="商品名称">
-        <el-input v-model="form.commodity" placeholder="请输入" clearable />
+        <el-input v-model="form.commodity" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="贸易国家">
-        <el-input v-model="form.tradeCountry" placeholder="请输入" clearable />
+        <el-input v-model="form.tradeCountry" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="贸易方式">
         <el-select v-model="form.tradeWayCode" placeholder="请选择" style="width: 192px" fit-input-width filterable>
@@ -112,10 +118,12 @@ onMounted(async () => {
         </el-select>
       </el-form-item>
       <el-form-item label="开始时间">
-        <el-date-picker v-model="form.startDate" type="date" placeholder="请选择" style="width: 192px" />
+        <el-date-picker v-model="form.startDate" type="date" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="结束时间">
-        <el-date-picker v-model="form.endDate" type="date" placeholder="请选择" style="width: 192px" />
+        <el-date-picker v-model="form.endDate" type="date" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>

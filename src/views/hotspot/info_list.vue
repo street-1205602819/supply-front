@@ -1,7 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getList } from '@/api/hotspot'
-import { mockData } from './mock'
+import { getList, downloadExcel } from '@/api/hotspot'
 const form = reactive({
   publishAddress: '',
   title: '',
@@ -24,37 +23,44 @@ const pageInfo = reactive({
 const onSearch = async () => {
   if (loading.value) return
   loading.value = true
-  list.value = list.value.concat(mockData.data)
-  pageInfo.total = mockData.total
+  const res = await getList({
+    page: pageInfo.page,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
+  list.value = list.value.concat(res.data)
+  pageInfo.total = res.total
   setTimeout(() => {
     loading.value = false
   }, 1000)
 }
 const onDownload = () => {
-
+  const res = downloadExcel({
+    ...form
+  })
 }
 
 const loading = ref(false)
 
 onMounted(() => {
   onSearch()
-  getList()
 })
 </script>
 <template>
   <div class="container">
     <el-form :inline="true" :model="form" class="info-form" label-position="top">
       <el-form-item label="发布点位">
-        <el-input v-model="form.publishAddress" placeholder="请输入" clearable />
+        <el-input v-model="form.publishAddress" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="标题">
-        <el-input v-model="form.title" placeholder="请输入" clearable />
+        <el-input v-model="form.title" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="敏感内容">
-        <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable />
+        <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="发布日期">
-        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" />
+        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" value-format="YYYY-MM-DD"
+          style="width: 192px" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>
