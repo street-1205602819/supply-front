@@ -2,7 +2,8 @@
 import { ref, watch } from 'vue'
 const props = defineProps({
   show: Boolean,
-  editData: Object
+  editData: Object,
+  editType: String,
 })
 const emit = defineEmits(['update:show', 'ok'])
 const dialogVisible = ref(false)
@@ -32,10 +33,11 @@ const onOk = () => {
   dialogVisible.value = false
   emit('ok')
 }
+
 </script>
 
 <template>
-  <el-dialog v-model="dialogVisible" title="编辑" width="500">
+  <el-dialog v-model="dialogVisible" :title="editType === 'add' ? '添加' : '编辑'" width="500">
     <el-form :model="formData" label-width="auto">
       <el-form-item label="序号">
         <el-input v-model="formData.seq" />
@@ -51,7 +53,7 @@ const onOk = () => {
       <div class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="onOk">
-          修改
+          确认
         </el-button>
       </div>
     </template>

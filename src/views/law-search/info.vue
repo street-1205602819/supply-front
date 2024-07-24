@@ -22,9 +22,16 @@ const onSearch = () => {
 
 const editDialogVisible = ref(false)
 const editRow = ref({})
+const editType = ref('add')
 const onEdit = e => {
   editDialogVisible.value = true
+  editType.value = 'edit'
   editRow.value = JSON.parse(JSON.stringify(e))
+}
+const onAdd = () => {
+  editType.value = 'add'
+  editDialogVisible.value = true
+  editRow.value = JSON.parse(JSON.stringify({}))
 }
 
 const currentChange = (e) => {
@@ -57,6 +64,7 @@ onMounted(() => {
     <el-link class="info-title" type="primary" href="https://flk.npc.gov.cn/" target="_blank">跳转至国家法律法规数据库</el-link>
     <div class="operation">
       <el-button @click="onDelete" type="primary">批量删除</el-button>
+      <el-button @click="onAdd" type="primary">添加</el-button>
     </div>
     <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect">
       <el-table-column type="selection" width="55" fixed />
@@ -72,7 +80,7 @@ onMounted(() => {
       </el-table-column>
     </el-table>
     <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
-    <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" />
+    <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" :editType="editType" />
     <checkDialog v-model:show="checkVisible" @ok="onCheckOk" />
   </div>
 </template>
