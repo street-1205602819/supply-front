@@ -1,4 +1,4 @@
-import { axiosGet, axiosPost } from '@/api/request'
+import { axiosGet } from '@/api/request'
 
 export const getTradeWay = () => axiosGet('/risk_analysis/dependency/analysis/list/trade_way')
 
@@ -7,3 +7,6 @@ export const getDomesticAddress = () =>
 
 export const getAnalysisList = (data) =>
   axiosGet('/risk_analysis/dependency/analysis/query/record', data)
+
+export const deleteRecord = (data) =>
+  axiosGet('/risk_analysis/dependency/analysis/delete/record', data)

@@ -72,7 +72,9 @@ const onDelete = () => {
 }
 
 const onCheckOk = async () => {
-  await deleteRecord(selectData.value.join(','))
+  await deleteRecord({
+    seq: selectData.value.join(',')
+  })
   ElMessage.success('操作成功')
   checkVisible.value = false
 }

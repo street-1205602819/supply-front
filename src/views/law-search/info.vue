@@ -2,7 +2,8 @@
 import { ref, onMounted, reactive } from 'vue'
 import editDialog from './components/editDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
-import { getRecordList } from '@/api/law'
+import { getRecordList, deleteRecord } from '@/api/law'
+import { ElMessage } from 'element-plus'
 const tableData = ref([])
 const pageInfo = reactive({
   total: 0,
@@ -54,8 +55,12 @@ const onDelete = () => {
   checkVisible.value = true
 }
 
-const onCheckOk = () => {
-
+const onCheckOk = async () => {
+  await deleteRecord({
+    seq: selectData.value.join(',')
+  })
+  ElMessage.success('操作成功')
+  checkVisible.value = false
 }
 
 onMounted(() => {

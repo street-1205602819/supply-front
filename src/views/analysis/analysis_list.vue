@@ -3,9 +3,8 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
 import { getMenuValue } from '@/assets/utils'
-import { getTradeWay, getDomesticAddress, getAnalysisList } from '@/api/analysis'
-import { tradeWayCodeMock, domesticAddressCodeMock, mockData } from './mock'
-// const uploadVisible = ref(false)
+import { getTradeWay, getDomesticAddress, getAnalysisList, deleteRecord } from '@/api/analysis'
+import { ElMessage } from 'element-plus'
 const form = reactive({
   tradeType: '',
   commodity: '',
@@ -83,8 +82,12 @@ const onDelete = () => {
   checkVisible.value = true
 }
 
-const onCheckOk = () => {
-
+const onCheckOk = async () => {
+  await deleteRecord({
+    seq: selectData.value.join(',')
+  })
+  ElMessage.success('操作成功')
+  checkVisible.value = false
 }
 
 
