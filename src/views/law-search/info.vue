@@ -2,7 +2,7 @@
 import { ref, onMounted, reactive } from 'vue'
 import editDialog from './components/editDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
-import { mockData } from './mock.js'
+import { getRecordList } from '@/api/law'
 const tableData = ref([])
 const pageInfo = reactive({
   total: 0,
@@ -15,9 +15,13 @@ const onSelect = (e) => {
   selectData.value = e.map((item) => item.seq)
 }
 
-const onSearch = () => {
-  tableData.value = mockData.data
-  pageInfo.total = mockData.total
+const onSearch = async () => {
+  const res = await getRecordList({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize
+  })
+  tableData.value = res.data
+  pageInfo.total = res.total
 }
 
 const editDialogVisible = ref(false)

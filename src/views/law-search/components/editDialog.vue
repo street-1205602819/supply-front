@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
+import { addRecord, updateRecord } from '@/api/law'
+import { ElMessage } from 'element-plus'
 const props = defineProps({
   show: Boolean,
   editData: Object,
@@ -29,7 +31,21 @@ watch(
   }
 )
 
-const onOk = () => {
+const onOk = async () => {
+  let func = null
+  let parmas = null
+  if (props.editType === 'add') {
+    func = addRecord
+    parmas = {
+      referWork: formData.value.referWork,
+      referLaw: formData.value.referLaw,
+    }
+  } else {
+    func = updateRecord
+    parmas = formData.value
+  }
+  await func(parmas)
+  ElMessage.success('操作成功')
   dialogVisible.value = false
   emit('ok')
 }
@@ -39,8 +55,8 @@ const onOk = () => {
 <template>
   <el-dialog v-model="dialogVisible" :title="editType === 'add' ? '添加' : '编辑'" width="500">
     <el-form :model="formData" label-width="auto">
-      <el-form-item label="序号">
-        <el-input v-model="formData.seq" />
+      <el-form-item label="序号" v-if="editType === 'edit'">
+        <el-input v-model="formData.seq" disabled />
       </el-form-item>
       <el-form-item label="涉及工作">
         <el-input v-model="formData.referWork" />

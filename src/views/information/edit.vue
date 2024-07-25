@@ -3,7 +3,8 @@ import { ref, onMounted, reactive, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import editDialog from './components/editDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
-import { mockData } from './mock'
+import { getRecord, deleteRecord } from '@/api/information'
+import { ElMessage } from 'element-plus'
 const uploadVisible = ref(false)
 const onUpload = () => {
   uploadVisible.value = true
@@ -18,11 +19,17 @@ const form = reactive({
   publishAddress: '',
   title: '',
   sensitiveContent: '',
-  publishTime: ''
+  originalLink: '',
+  publishTime: '',
 })
-const onSearch = () => {
-  tableData.value = mockData.data
-  pageInfo.total = mockData.total
+const onSearch = async () => {
+  const res = await getRecord({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
+  tableData.value = res.data
+  pageInfo.total = res.total
 }
 
 const tableData = ref([])
@@ -64,25 +71,31 @@ const onDelete = () => {
   checkVisible.value = true
 }
 
-const onCheckOk = () => {
-
+const onCheckOk = async () => {
+  await deleteRecord(selectData.value.join(','))
+  ElMessage.success('操作成功')
+  checkVisible.value = false
 }
 </script>
 
 <template>
   <div class="container">
     <el-form :inline="true" :model="form" class="form" label-position="top">
-      <el-form-item label="发布点位">
-        <el-input v-model="form.publishAddress" placeholder="请输入" clearable />
-      </el-form-item>
       <el-form-item label="标题">
-        <el-input v-model="form.title" placeholder="请输入" clearable />
+        <el-input v-model="form.title" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="发布点位">
+        <el-input v-model="form.publishAddress" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="敏感内容">
-        <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable />
+        <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
-      <el-form-item label="发布日期">
-        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" style="width: 192px" />
+      <el-form-item label="原文链接">
+        <el-input v-model="form.originalLink" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="发布时间">
+        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>
@@ -97,8 +110,13 @@ const onCheckOk = () => {
         <el-table-column type="selection" width="55" fixed />
         <el-table-column prop="title" label="标题" width="180" show-overflow-tooltip />
         <el-table-column prop="publishAddress" label="发布点位" width="180" show-overflow-tooltip />
-        <el-table-column prop="publishTime" label="发布时间" width="180" show-overflow-tooltip />
         <el-table-column prop="sensitiveContent" label="敏感内容" show-overflow-tooltip />
+        <el-table-column label="原文链接" width="180" show-overflow-tooltip>
+          <template #default="scope">
+            <el-link :href="scope.row.originalLink" target="_blank" type="primary">{{ scope.row.originalLink }}</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column prop="publishTime" label="发布时间" width="180" show-overflow-tooltip />
         <el-table-column label="操作" width="90" fixed="right">
           <template #default="scope">
             <el-button text @click="onEdit(scope.row)" type="primary">

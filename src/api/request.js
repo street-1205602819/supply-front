@@ -28,7 +28,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    ElMessage.error(error.message)
+    ElMessage.error(error.message || '请求失败')
     return Promise.reject(error)
   }
 )
