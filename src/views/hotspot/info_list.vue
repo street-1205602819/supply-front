@@ -5,7 +5,8 @@ const form = reactive({
   publishAddress: '',
   title: '',
   sensitiveContent: '',
-  publishTime: ''
+  originalLink: '',
+  publishTime: '',
 })
 
 const onLoad = () => {
@@ -49,16 +50,19 @@ onMounted(() => {
 <template>
   <div class="container">
     <el-form :inline="true" :model="form" class="info-form" label-position="top">
-      <el-form-item label="发布点位">
-        <el-input v-model="form.publishAddress" placeholder="请输入" clearable style="width: 192px" />
-      </el-form-item>
       <el-form-item label="标题">
         <el-input v-model="form.title" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="发布点位">
+        <el-input v-model="form.publishAddress" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="敏感内容">
         <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
-      <el-form-item label="发布日期">
+      <el-form-item label="原文链接">
+        <el-input v-model="form.originalLink" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="发布时间">
         <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" value-format="YYYY-MM-DD"
           style="width: 192px" />
       </el-form-item>

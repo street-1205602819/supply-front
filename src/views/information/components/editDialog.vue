@@ -51,7 +51,7 @@ const onOk = async () => {
       <el-form-item label="敏感内容	">
         <el-input v-model="formData.sensitiveContent" />
       </el-form-item>
-      <el-form-item label="原文链接	">
+      <el-form-item label="原文链接">
         <el-input v-model="formData.originalLink" />
       </el-form-item>
       <el-form-item label="发布时间">
