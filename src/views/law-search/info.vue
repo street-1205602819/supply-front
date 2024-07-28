@@ -50,6 +50,7 @@ const onEditOk = () => {
 const checkVisible = ref(false)
 const onDelete = () => {
   if (!selectData.value.length) {
+    ElMessage.error('请先选择要删除的数据')
     return
   }
   checkVisible.value = true
@@ -61,6 +62,7 @@ const onCheckOk = async () => {
   })
   ElMessage.success('操作成功')
   checkVisible.value = false
+  onSearch()
 }
 
 onMounted(() => {

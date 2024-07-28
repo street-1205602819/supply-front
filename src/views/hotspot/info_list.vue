@@ -21,7 +21,7 @@ const pageInfo = reactive({
   pageSize: 20,
   total: -1,
 })
-const onSearch = async () => {
+const onSearch = async isRefresh => {
   if (loading.value) return
   loading.value = true
   const res = await getList({
@@ -29,7 +29,12 @@ const onSearch = async () => {
     pageSize: pageInfo.pageSize,
     ...form
   })
-  list.value = list.value.concat(res.data)
+  console.log('isRefresh',isRefresh);
+  if (isRefresh) {
+    list.value = res.data
+  } else {
+    list.value = list.value.concat(res.data)
+  }
   pageInfo.total = res.total
   setTimeout(() => {
     loading.value = false
@@ -44,7 +49,7 @@ const onDownload = () => {
 const loading = ref(false)
 
 onMounted(() => {
-  onSearch()
+  onSearch(true)
 })
 </script>
 <template>
@@ -67,7 +72,7 @@ onMounted(() => {
           style="width: 192px" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
-        <el-button @click="onSearch">查询</el-button>
+        <el-button @click="onSearch(true)">查询</el-button>
         <el-button type="primary" @click="onDownload">下载</el-button>
       </el-form-item>
     </el-form>
@@ -157,7 +162,7 @@ onMounted(() => {
 
 .info-content {
   font-size: 14px;
-  height: 112px;
+  height: 90px;
   overflow: auto;
   display: -webkit-box;
   -webkit-box-orient: vertical;

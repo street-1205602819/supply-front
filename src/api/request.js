@@ -24,7 +24,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(res)
     } else {
-      return Promise.resolve(res)
+      return Promise.resolve(res.data)
     }
   },
   (error) => {
