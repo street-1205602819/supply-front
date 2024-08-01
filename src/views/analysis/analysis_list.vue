@@ -92,6 +92,9 @@ const onCheckOk = async () => {
   onSearch()
 }
 
+const onEdit = row => {
+  console.log(row);
+}
 
 onMounted(async () => {
   await getList()

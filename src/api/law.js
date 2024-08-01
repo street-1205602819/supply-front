@@ -5,6 +5,6 @@ export const addRecord = (data) => axiosGet('/risk_analysis/legal/check/add/reco
 export const updateRecord = (data) =>
   axiosPostForm('/risk_analysis/legal/check/update/record', data)
 
-export const getRecordList = (data) => axiosGet('/risk_analysis/hot/consult/query/record', data)
+export const getRecordList = (data) => axiosGet('/legal/check/query/record', data)
 
 export const deleteRecord = (data) => axiosGet('/risk_analysis/legal/check/delete/record', data)

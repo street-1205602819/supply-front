@@ -29,7 +29,6 @@ const onSearch = async isRefresh => {
     pageSize: pageInfo.pageSize,
     ...form
   })
-  console.log('isRefresh',isRefresh);
   if (isRefresh) {
     list.value = res.data
   } else {

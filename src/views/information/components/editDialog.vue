@@ -27,7 +27,6 @@ watch(
   () => props.editData,
   (val) => {
     formData.value = val
-    console.log(formData.value);
   }
 )
 
