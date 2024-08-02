@@ -1,0 +1,22 @@
+#app {
+  .el-menu {
+    border: none;
+    padding: 0;
+    background-color: #f0f2f8;
+    &-item {
+      border-radius: 6px;
+      height: 40px;
+      margin-bottom: 8px;
+
+      &:hover {
+        background-color: rgba(9, 29, 98, 0.04);
+      }
+
+      &.is-active {
+        color: #374050;
+        font-weight: 600;
+        background-color: rgba(9, 29, 98, 0.06);
+      }
+    }
+  }
+}
