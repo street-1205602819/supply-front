@@ -110,7 +110,7 @@ onMounted(() => {
         <el-popover
           placement="bottom"
           title=""
-          :width="200"
+          :width="500"
           trigger="click"
           :content="item.sensitiveContent"
         >
