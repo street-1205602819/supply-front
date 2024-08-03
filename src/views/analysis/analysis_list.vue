@@ -171,7 +171,7 @@ onMounted(async () => {
           </template>
         </el-table-column> -->
       </el-table>
-      <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
+      <el-pagination layout="prev, pager, next, jumper" :total="pageInfo.total" @current-change="currentChange" :page-size="20" />
     </div>
     <checkDialog v-model:show="checkVisible" @ok="onCheckOk" />
   </div>

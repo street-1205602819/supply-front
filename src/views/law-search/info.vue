@@ -95,9 +95,10 @@ onMounted(() => {
       </el-table-column>
     </el-table>
     <el-pagination
-      layout="prev, pager, next"
+      layout="prev, pager, next, jumper"
       :total="pageInfo.total"
       @current-change="currentChange"
+      :page-size="20"
     />
     <editDialog
       v-model:show="editDialogVisible"

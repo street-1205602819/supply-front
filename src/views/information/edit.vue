@@ -138,7 +138,7 @@ const onReset = () => {
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
+      <el-pagination layout="prev, pager, next, jumper" :total="pageInfo.total" @current-change="currentChange" :page-size="20" />
     </div>
     <uploadDialog v-model:show="uploadVisible" />
     <editDialog v-model:show="editDialogVisible" :editData="editRow" @ok="onEditOk" />
