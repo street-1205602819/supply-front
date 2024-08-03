@@ -55,11 +55,14 @@ const onSelect = (e) => {
 }
 
 const onSearch = async () => {
+  tableLoading.value = false
   const res = await getAnalysisList({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
     ...form
   })
+  ElMessage.success('查询成功')
+  tableLoading.value = false
   tableData.value = res.data
   pageInfo.total = res.total
 }
@@ -102,6 +105,8 @@ const onReset = () => {
   form.tradeWayCode = ''
 }
 
+const tableLoading = ref(false)
+
 onMounted(async () => {
   await getList()
   onSearch()
@@ -123,7 +128,11 @@ onMounted(async () => {
       </el-form-item>
       <el-form-item label="贸易方式">
         <el-select v-model="form.tradeWayCode" placeholder="请选择" style="width: 192px" fit-input-width filterable>
-          <el-option v-for="item in tradeWayCodeList" :key="item.code" :label="item.name" :value="item.code" />
+          <el-option v-for="item in tradeWayCodeList" :key="item.code" :label="item.name" :value="item.code">
+            <el-tooltip effect="dark" :content="item.name" placement="top-start">
+              <span>{{ item.name }}</span>
+            </el-tooltip>
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="境内地址">
@@ -150,7 +159,7 @@ onMounted(async () => {
       <div class="operation">
         <el-button @click="onDelete" type="primary">批量删除</el-button>
       </div>
-      <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect">
+      <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect" v-loading="tableLoading">
         <el-table-column type="selection" width="55" fixed />
         <el-table-column prop="date" label="发布年月" width="180" show-overflow-tooltip />
         <el-table-column label="发布点位" width="90" show-overflow-tooltip>

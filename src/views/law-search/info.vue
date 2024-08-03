@@ -17,10 +17,13 @@ const onSelect = (e) => {
 }
 
 const onSearch = async () => {
+  tableLoading.value = true
   const res = await getRecordList({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize
   })
+  ElMessage.success('查询成功')
+  tableLoading.value = false
   tableData.value = res.data
   pageInfo.total = res.total
 }
@@ -65,6 +68,8 @@ const onCheckOk = async () => {
   onSearch()
 }
 
+const tableLoading = ref(false)
+
 onMounted(() => {
   onSearch()
 })
@@ -79,7 +84,7 @@ onMounted(() => {
       <el-button @click="onDelete" type="primary">批量删除</el-button>
       <el-button @click="onAdd" type="primary">添加</el-button>
     </div>
-    <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect">
+    <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect" v-loading="tableLoading">
       <el-table-column type="selection" width="55" fixed />
       <el-table-column prop="seq" label="序号" width="180" show-overflow-tooltip>
         <template #default="scope">

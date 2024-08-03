@@ -55,9 +55,6 @@ const onOk = async () => {
 <template>
   <el-dialog v-model="dialogVisible" :title="editType === 'add' ? '添加' : '编辑'" width="500">
     <el-form :model="formData" label-width="auto">
-      <el-form-item label="序号" v-if="editType === 'edit'">
-        <el-input v-model="formData.seq" disabled />
-      </el-form-item>
       <el-form-item label="涉及工作">
         <el-input v-model="formData.referWork" />
       </el-form-item>

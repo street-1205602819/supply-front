@@ -20,7 +20,7 @@ const onSelect = e => {
 const title = computed(() => route.meta.title)
 
 const sidebarWidth = computed(() => isShowBar.value ? 200 : 70)
-const isShowBar = ref(false)
+const isShowBar = ref(true)
 
 const onAi = () => {
   window.open('https://chatglm.cn/applyAndLogin', '_blank')

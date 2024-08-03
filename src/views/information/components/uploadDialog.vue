@@ -27,16 +27,21 @@ const handleExceed = (files) => {
 }
 
 const submitUpload = () => {
+  loading.value = true
   upload.value.submit()
 }
 
 const onSuccess = () => {
   ElMessage.success('上传数据成功')
+  loading.value = false
 }
 
 const onError = () => {
+  loading.value = false
   ElMessage.error('上传数据失败')
 }
+
+const loading = ref(false)
 
 const uploadUrl = import.meta.env.VITE_BASE_URL + '/risk_analysis/hot/consult/upload/excel'
 
@@ -44,7 +49,7 @@ const uploadUrl = import.meta.env.VITE_BASE_URL + '/risk_analysis/hot/consult/up
 
 <template>
   <el-dialog v-model="dialogVisible" title="上传" width="500">
-    <el-upload ref="upload" :action="uploadUrl" :limit="1" :on-exceed="handleExceed" :auto-upload="false"
+    <el-upload v-loading="loading" ref="upload" :action="uploadUrl" :limit="1" :on-exceed="handleExceed" :auto-upload="false"
       :on-success="onSuccess" :on-error="onError">
       <template #trigger>
         <el-button>选择文件</el-button>

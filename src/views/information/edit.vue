@@ -23,11 +23,14 @@ const form = reactive({
   publishTime: '',
 })
 const onSearch = async () => {
+  tableLoading.value = true
   const res = await getRecord({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
     ...form
   })
+  tableLoading.value = false
+  ElMessage.success('查询成功')
   tableData.value = res.data
   pageInfo.total = res.total
 }
@@ -81,6 +84,8 @@ const onCheckOk = async () => {
   onSearch()
 }
 
+const tableLoading = ref(false)
+
 const onReset = () => {
   form.originalLink = ''
   form.publishAddress = ''
@@ -119,7 +124,7 @@ const onReset = () => {
       <div class="operation">
         <el-button @click="onDelete" type="primary">批量删除</el-button>
       </div>
-      <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect">
+      <el-table :data="tableData" border style="width: 100%" @selection-change="onSelect" v-loading="tableLoading">
         <el-table-column type="selection" width="55" fixed />
         <el-table-column prop="title" label="标题" width="180" show-overflow-tooltip />
         <el-table-column prop="publishAddress" label="发布点位" width="180" show-overflow-tooltip />

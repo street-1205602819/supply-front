@@ -27,15 +27,18 @@ const handleExceed = (files) => {
 }
 
 const submitUpload = () => {
+  loading.value = true
   upload.value.submit()
 }
 
 const onSuccess = () => {
   ElMessage.success('上传数据成功')
+  loading.value = false
 }
 
 const onError = () => {
   ElMessage.error('上传数据失败')
+  loading.value = false
 }
 
 const form = reactive({
@@ -52,6 +55,8 @@ const tradeTypeList = [
   }
 ]
 
+const loading = ref(false)
+
 const uploadUrl = import.meta.env.VITE_BASE_URL + '/risk_analysis/dependency/analysis/upload/excel'
 
 </script>
@@ -65,7 +70,7 @@ const uploadUrl = import.meta.env.VITE_BASE_URL + '/risk_analysis/dependency/ana
         </el-select>
       </el-form-item>
     </el-form>
-    <el-upload ref="upload" :action="uploadUrl" :limit="1" :on-exceed="handleExceed" :auto-upload="false" :data="form"
+    <el-upload v-loading="loading" ref="upload" :action="uploadUrl" :limit="1" :on-exceed="handleExceed" :auto-upload="false" :data="form"
       :on-success="onSuccess" :on-error="onError">
       <template #trigger>
         <el-button>选择文件</el-button>
