@@ -80,6 +80,14 @@ const onCheckOk = async () => {
   checkVisible.value = false
   onSearch()
 }
+
+const onReset = () => {
+  form.originalLink = ''
+  form.publishAddress = ''
+  form.publishTime = ''
+  form.sensitiveContent = ''
+  form.title = ''
+}
 </script>
 
 <template>
@@ -103,6 +111,7 @@ const onCheckOk = async () => {
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>
+        <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onUpload">上传</el-button>
       </el-form-item>
     </el-form>

@@ -41,7 +41,7 @@ const getList = async () => {
 const tableData = ref([])
 const pageInfo = reactive({
   total: 0,
-  pageSize: 10,
+  pageSize: 20,
   pageNum: 1
 })
 const currentChange = (e) => {
@@ -92,8 +92,14 @@ const onCheckOk = async () => {
   onSearch()
 }
 
-const onEdit = row => {
-  console.log(row);
+const onReset = () => {
+  form.commodity = ''
+  form.domesticAddressCode = ''
+  form.endDate = ''
+  form.startDate = ''
+  form.tradeCountry = ''
+  form.tradeType = ''
+  form.tradeWayCode = ''
 }
 
 onMounted(async () => {
@@ -126,15 +132,16 @@ onMounted(async () => {
         </el-select>
       </el-form-item>
       <el-form-item label="开始时间">
-        <el-date-picker v-model="form.startDate" type="date" placeholder="请选择" style="width: 192px"
-          value-format="YYYY-MM-DD" />
+        <el-date-picker v-model="form.startDate" type="month" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM" />
       </el-form-item>
       <el-form-item label="结束时间">
-        <el-date-picker v-model="form.endDate" type="date" placeholder="请选择" style="width: 192px"
-          value-format="YYYY-MM-DD" />
+        <el-date-picker v-model="form.endDate" type="month" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch">查询</el-button>
+        <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onUpload">上传</el-button>
       </el-form-item>
     </el-form>
@@ -156,13 +163,13 @@ onMounted(async () => {
         <el-table-column prop="tradeWay" label="贸易方式" min-width="220" show-overflow-tooltip />
         <el-table-column prop="domesticAddress" label="境内地址" width="120" show-overflow-tooltip />
         <el-table-column prop="kilogram" label="第一计量" width="120" show-overflow-tooltip />
-        <el-table-column label="操作" width="90" fixed="right">
+        <!-- <el-table-column label="操作" width="90" fixed="right">
           <template #default="scope">
             <el-button text @click="onEdit(scope.row)" type="primary">
               编辑
             </el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="currentChange" />
     </div>

@@ -47,6 +47,14 @@ const onDownload = () => {
 
 const loading = ref(false)
 
+const onReset = () => {
+  form.originalLink = ''
+  form.publishAddress = ''
+  form.publishTime = ''
+  form.sensitiveContent = ''
+  form.title = ''
+}
+
 onMounted(() => {
   onSearch(true)
 })
@@ -72,6 +80,7 @@ onMounted(() => {
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
+        <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onDownload">下载</el-button>
       </el-form-item>
     </el-form>
