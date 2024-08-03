@@ -54,14 +54,16 @@ const onSelect = (e) => {
   selectData.value = e.map((item) => item.seq)
 }
 
-const onSearch = async () => {
-  tableLoading.value = false
+const onSearch = async isClickSearch => {
+  tableLoading.value = true
   const res = await getAnalysisList({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
     ...form
   })
-  ElMessage.success('查询成功')
+  if (isClickSearch) {
+    ElMessage.success('查询成功')
+  }
   tableLoading.value = false
   tableData.value = res.data
   pageInfo.total = res.total
@@ -149,7 +151,7 @@ onMounted(async () => {
           value-format="YYYY-MM" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
-        <el-button @click="onSearch">查询</el-button>
+        <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onUpload">上传</el-button>
       </el-form-item>

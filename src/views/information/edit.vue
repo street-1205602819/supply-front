@@ -19,18 +19,19 @@ const form = reactive({
   publishAddress: '',
   title: '',
   sensitiveContent: '',
-  originalLink: '',
   publishTime: '',
 })
-const onSearch = async () => {
+const onSearch = async isClickSearch => {
   tableLoading.value = true
   const res = await getRecord({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
     ...form
   })
+  if (isClickSearch) {
+    ElMessage.success('查询成功')
+  }
   tableLoading.value = false
-  ElMessage.success('查询成功')
   tableData.value = res.data
   pageInfo.total = res.total
 }
@@ -87,7 +88,6 @@ const onCheckOk = async () => {
 const tableLoading = ref(false)
 
 const onReset = () => {
-  form.originalLink = ''
   form.publishAddress = ''
   form.publishTime = ''
   form.sensitiveContent = ''
@@ -107,15 +107,12 @@ const onReset = () => {
       <el-form-item label="敏感内容">
         <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
-      <el-form-item label="原文链接">
-        <el-input v-model="form.originalLink" placeholder="请输入" clearable style="width: 192px" />
-      </el-form-item>
       <el-form-item label="发布时间">
         <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" style="width: 192px"
           value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
-        <el-button @click="onSearch">查询</el-button>
+        <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onUpload">上传</el-button>
       </el-form-item>

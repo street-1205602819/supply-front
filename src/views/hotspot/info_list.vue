@@ -1,12 +1,10 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { getList, downloadExcel } from '@/api/hotspot'
-import axios from 'axios'
 const form = reactive({
   publishAddress: '',
   title: '',
   sensitiveContent: '',
-  originalLink: '',
   publishTime: ''
 })
 
@@ -49,7 +47,6 @@ const onDownload = async () => {
 const loading = ref(false)
 
 const onReset = () => {
-  form.originalLink = ''
   form.publishAddress = ''
   form.publishTime = ''
   form.sensitiveContent = ''
@@ -81,9 +78,6 @@ onMounted(() => {
           clearable
           style="width: 192px"
         />
-      </el-form-item>
-      <el-form-item label="原文链接">
-        <el-input v-model="form.originalLink" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="发布时间">
         <el-date-picker

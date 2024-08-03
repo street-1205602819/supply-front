@@ -16,13 +16,15 @@ const onSelect = (e) => {
   selectData.value = e.map((item) => item.seq)
 }
 
-const onSearch = async () => {
+const onSearch = async isClickSearch => {
   tableLoading.value = true
   const res = await getRecordList({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize
   })
-  ElMessage.success('查询成功')
+  if (isClickSearch) {
+    ElMessage.success('查询成功')
+  }
   tableLoading.value = false
   tableData.value = res.data
   pageInfo.total = res.total
