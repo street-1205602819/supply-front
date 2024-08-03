@@ -22,7 +22,9 @@ const title = computed(() => route.meta.title)
 const sidebarWidth = computed(() => isShowBar.value ? 200 : 70)
 const isShowBar = ref(false)
 
-
+const onAi = () => {
+  window.open('https://chatglm.cn/applyAndLogin', '_blank')
+}
 </script>
 
 <template>
@@ -43,6 +45,7 @@ const isShowBar = ref(false)
             </div>
           </template>
         </el-menu-item>
+        <i class="iconfont icon-ai" v-if="!isShowBar" @click="onAi"></i>
         <el-link v-if="isShowBar" class="ai-button" type="primary" href="https://chatglm.cn/applyAndLogin" target="_blank">AI指导</el-link>
       </el-menu>
     </el-aside>
@@ -142,6 +145,14 @@ const isShowBar = ref(false)
   position: absolute;
   left: 8px;
   font-size: 12px;
+  cursor: pointer;
+}
+
+.icon-ai {
+  font-size: 30px;
+  position: absolute;
+  bottom: 14px;
+  left: 10px;
   cursor: pointer;
 }
 </style>
