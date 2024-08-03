@@ -44,7 +44,7 @@ const router = createRouter({
           path: 'data-show',
           name: 'data-show',
           component: () => import('@/views/info-summary/data-show.vue'),
-          meta: { title: '信息汇总' }
+          meta: { title: '舆情形势' }
         }
       ]
     },

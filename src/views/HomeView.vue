@@ -16,27 +16,41 @@ const onSelect = e => {
   sideBarActive.value = e
   router.push({ name: menus.value[e].children[0].route })
 }
-console.log('route', route);
 
 const title = computed(() => route.meta.title)
+
+const sidebarWidth = computed(() => isShowBar.value ? 200 : 70)
+const isShowBar = ref(false)
+
 
 </script>
 
 <template>
   <el-container class="app-main">
-    <el-aside class="sidebar">
+    <el-aside class="sidebar" :width="sidebarWidth + 'px'">
       <div class="logo-container">
         <img src="../assets/img/logo.png" alt="" class="app-logo">
+        <div class="logo-text" v-if="isShowBar">Supply Chain</div>
       </div>
       <el-menu :default-active="sideBarActive" class="sidebar-menu" :collapse="isCollapse" @select="onSelect">
         <el-menu-item v-for="(item, index) in menus" :key="index" :index="String(index)">
-          <template #title>{{ item.name }}</template>
+          <template #title>
+            <div class="menu-content">
+              <i :class="`iconfont icon-${item.route}`"></i>
+              <span v-if="isShowBar">
+                {{ item.name }}
+              </span>
+            </div>
+          </template>
         </el-menu-item>
-        <el-link class="ai-button" type="primary" href="https://chatglm.cn/applyAndLogin" target="_blank">AI指导</el-link>
+        <el-link v-if="isShowBar" class="ai-button" type="primary" href="https://chatglm.cn/applyAndLogin" target="_blank">AI指导</el-link>
       </el-menu>
     </el-aside>
     <el-container class="app-content">
-      <div class="content-title">{{ title }}</div>
+      <div class="content-title">
+        <span>{{ title }}</span>
+        <i :class="`iconfont icon-shouqi-01 collapse`" @click="isShowBar = !isShowBar"></i>
+        </div>
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -52,7 +66,6 @@ const title = computed(() => route.meta.title)
 
 .sidebar {
   height: 100%;
-  max-width: 200px;
   background-color: #f0f2f8;
   padding: 8px;
 }
@@ -74,6 +87,7 @@ const title = computed(() => route.meta.title)
   display: flex;
   align-items: center;
   padding: 0 0 10px 10px;
+  position: relative;
 }
 
 .app-content {
@@ -81,19 +95,53 @@ const title = computed(() => route.meta.title)
 }
 
 .content-title {
-  height: 60px;
+  min-height: 60px;
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 26px;
   font-weight: 600;
   color: #374050;
   font-size: 18px;
   border-bottom: 1px solid rgb(238, 239, 243);
   background-color: rgb(249, 249, 251);
+  position: relative;
 }
 
 .app-logo {
   height: 40px;
   width: 40px;
+  margin-right: 8px;
+}
+
+.logo-text {
+  font-weight: 600;
+}
+
+.menu-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-button {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  right: -22px;
+  z-index: 999;
+  background-color: #c5c5c5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+
+.collapse {
+  position: absolute;
+  left: 8px;
+  font-size: 12px;
+  cursor: pointer;
 }
 </style>

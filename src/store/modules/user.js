@@ -21,7 +21,7 @@ const state = {
       ]
     },
     {
-      name: '信息汇总',
+      name: '舆情形势',
       route: 'info-summary',
       children: [
         {
