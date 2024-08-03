@@ -11,17 +11,19 @@ const service = axios.create({
 service.interceptors.response.use(
   (response) => {
     const res = response.data
+    // console.log(response);
+    if (String(response.headers['content-type']).includes('application/vnd.vnd.ms-excel')) {
+      return Promise.resolve(response)
+    }
     if (response.config.responseType === 'blob') {
       return Promise.resolve(res)
     }
     if (res.code !== 1) {
-      if (response.config.requestType !== requestType.RETAIN) {
-        ElMessage({
-          message: res.msg || res.message || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      }
+      ElMessage({
+        message: res.msg || res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
       return Promise.reject(res)
     } else {
       return Promise.resolve(res.data)
@@ -58,4 +60,23 @@ export const axiosPost = (url, data, options) =>
     ...options
   })
 
+export const download = (url, data) => {
+  axios({
+    method: 'post',
+    url: import.meta.env.VITE_BASE_URL + url,
+    responseType: 'blob',
+    data
+  }).then(function (response) {
+    const blob = new Blob([response.data])
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', '热点资讯数据.xlsx')
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    ElMessage.success('操作成功')
+  })
+}
 export default service

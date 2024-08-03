@@ -1,12 +1,13 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { getList, downloadExcel } from '@/api/hotspot'
+import axios from 'axios'
 const form = reactive({
   publishAddress: '',
   title: '',
   sensitiveContent: '',
   originalLink: '',
-  publishTime: '',
+  publishTime: ''
 })
 
 const onLoad = () => {
@@ -19,9 +20,9 @@ const list = ref([])
 const pageInfo = reactive({
   page: 1,
   pageSize: 20,
-  total: -1,
+  total: -1
 })
-const onSearch = async isRefresh => {
+const onSearch = async (isRefresh) => {
   if (loading.value) return
   loading.value = true
   const res = await getList({
@@ -39,8 +40,8 @@ const onSearch = async isRefresh => {
     loading.value = false
   }, 1000)
 }
-const onDownload = () => {
-  const res = downloadExcel({
+const onDownload = async () => {
+  downloadExcel({
     ...form
   })
 }
@@ -66,17 +67,32 @@ onMounted(() => {
         <el-input v-model="form.title" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="发布点位">
-        <el-input v-model="form.publishAddress" placeholder="请输入" clearable style="width: 192px" />
+        <el-input
+          v-model="form.publishAddress"
+          placeholder="请输入"
+          clearable
+          style="width: 192px"
+        />
       </el-form-item>
       <el-form-item label="敏感内容">
-        <el-input v-model="form.sensitiveContent" placeholder="请输入" clearable style="width: 192px" />
+        <el-input
+          v-model="form.sensitiveContent"
+          placeholder="请输入"
+          clearable
+          style="width: 192px"
+        />
       </el-form-item>
       <el-form-item label="原文链接">
         <el-input v-model="form.originalLink" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="发布时间">
-        <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择" value-format="YYYY-MM-DD"
-          style="width: 192px" />
+        <el-date-picker
+          v-model="form.publishTime"
+          type="date"
+          placeholder="请选择"
+          value-format="YYYY-MM-DD"
+          style="width: 192px"
+        />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
@@ -87,9 +103,17 @@ onMounted(() => {
     <ul v-infinite-scroll="onLoad" class="info-list" :infinite-scroll-distance="200">
       <div class="info-img"></div>
       <li v-for="(item, index) in list" :key="index" class="info-list-item">
-        <el-link class="info-title" :href="item.originalLink" target="_blank">{{ item.title }}</el-link>
+        <el-link class="info-title" :href="item.originalLink" target="_blank">{{
+          item.title
+        }}</el-link>
         <p class="info-time">{{ item.publishAddress }} {{ item.publishTime }}</p>
-        <el-popover placement="bottom" title="" :width="200" trigger="click" :content="item.sensitiveContent">
+        <el-popover
+          placement="bottom"
+          title=""
+          :width="200"
+          trigger="click"
+          :content="item.sensitiveContent"
+        >
           <template #reference>
             <p class="info-content">{{ item.sensitiveContent }}</p>
           </template>
