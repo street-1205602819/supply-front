@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { getList, deleteCategory, deleteKeyword, keywordCrawling, userCrawling, stopCrawling, checkCrawling } from '@/api/info-summary'
 import editDialog from './components/setting/editDialog.vue'
-import { settingMock } from './mock.js'
+// import { settingMock } from './mock.js'
 const form = reactive({
   categoryNo: '',
   keyword: ''
@@ -12,12 +12,11 @@ const form = reactive({
 const tableLoading = ref(false)
 const onSearch = async (isClickSearch) => {
   tableLoading.value = true
-  // const res = await getList({
-  //   page: pageInfo.pageNum,
-  //   pageSize: pageInfo.pageSize,
-  //   ...form
-  // })
-  const res = settingMock
+  const res = await getList({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
   if (isClickSearch) {
     ElMessage.success('查询成功')
   }
@@ -100,10 +99,10 @@ const onEdit = (row, field) => {
   editDialogVisible.value = true
 }
 
-const onAdd = field => {
+const onAdd = (row, field) => {
   editType.value = 'add'
   editField.value = field
-  editRow.value = {}
+  editRow.value = JSON.parse(JSON.stringify(row))
   editDialogVisible.value = true
 }
 
@@ -128,8 +127,6 @@ onMounted(() => {
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
-        <el-button @click="onAdd('category')">新增环节</el-button>
-        <el-button @click="onAdd('keyword')">新增关键词</el-button>
       </el-form-item>
     </el-form>
     <div class="table-container">
@@ -142,14 +139,14 @@ onMounted(() => {
       <el-table :data="tableData" border v-loading="tableLoading">
         <el-table-column prop="category" label="当前关注环节" show-overflow-tooltip />
         <el-table-column prop="keyword" label="爬取关键词" show-overflow-tooltip />
-        <el-table-column label="删除" fixed="right" width="220">
+        <el-table-column label="新增" fixed="right" width="220">
           <template #default="scope">
             <div class="table-operation">
-              <el-button text @click="onDelete(scope.row, 'category')" type="primary">
-                删除环节
+              <el-button text @click="onAdd(scope.row, 'category')" type="primary">
+                新增环节
               </el-button>
-              <el-button text @click="onDelete(scope.row, 'keyword')" type="primary">
-                删除关键词
+              <el-button text @click="onAdd(scope.row, 'keyword')" type="primary">
+                新增关键词
               </el-button>
             </div>
           </template>
@@ -162,6 +159,18 @@ onMounted(() => {
               </el-button>
               <el-button text @click="onEdit(scope.row, 'keyword')" type="primary">
                 编辑关键词
+              </el-button>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="删除" fixed="right" width="220">
+          <template #default="scope">
+            <div class="table-operation">
+              <el-button text @click="onDelete(scope.row, 'category')" type="primary">
+                删除环节
+              </el-button>
+              <el-button text @click="onDelete(scope.row, 'keyword')" type="primary">
+                删除关键词
               </el-button>
             </div>
           </template>

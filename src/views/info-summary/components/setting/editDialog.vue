@@ -29,6 +29,9 @@ watch(
   () => props.editData,
   (val) => {
     formData.value = JSON.parse(JSON.stringify(val))
+    if (props.editType === 'add') {
+      formData.value = {}
+    }
   }
 )
 
