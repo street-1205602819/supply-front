@@ -1,9 +1,14 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getList, deleteCategory, deleteKeyword, keywordCrawling, userCrawling, stopCrawling, checkCrawling } from '@/api/info-summary'
+import { getList, deleteCategory, deleteKeyword, keywordCrawling, userCrawling, stopCrawling, checkCrawling, getCategoryList } from '@/api/info-summary'
 import editDialog from './components/setting/editDialog.vue'
-// import { settingMock } from './mock.js'
+// import { categoryListMock, settingMock } from './mock.js'
+const categoryOptions = ref([])
+const getCategoryOptions = async() => {
+  categoryOptions.value  = (await getCategoryList())?.data || []
+  form.categoryNo = categoryOptions.value[0].code
+}
 const form = reactive({
   categoryNo: '',
   keyword: ''
@@ -26,7 +31,7 @@ const onSearch = async (isClickSearch) => {
 }
 
 const onReset = () => {
-  form.categoryNo = ''
+  form.categoryNo = categoryOptions.value[0].code
   form.keyword = ''
 }
 
@@ -73,7 +78,7 @@ const onDelete = async (row, field) => {
     case 'category':
       fn = deleteCategory
       params = {
-        categoryNo: row.categoryNo
+        categoryNo: form.categoryNo
       }
       break
     case 'keyword':
@@ -99,10 +104,12 @@ const onEdit = (row, field) => {
   editDialogVisible.value = true
 }
 
-const onAdd = (row, field) => {
+const onAdd = (field) => {
   editType.value = 'add'
   editField.value = field
-  editRow.value = JSON.parse(JSON.stringify(row))
+  editRow.value = {
+    categoryNo: form.categoryNo
+  }
   editDialogVisible.value = true
 }
 
@@ -110,7 +117,8 @@ const onEditOk = () => {
   onSearch()
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await getCategoryOptions()
   onSearch()
 })
 </script>
@@ -119,7 +127,9 @@ onMounted(() => {
   <div class="container">
     <el-form :inline="true" :model="form" class="form" label-position="top">
       <el-form-item label="环节编码">
-        <el-input v-model="form.categoryNo" placeholder="请输入" clearable style="width: 192px" />
+        <el-select v-model="form.categoryNo" placeholder="请选择" style="width: 192px" fit-input-width filterable>
+          <el-option v-for="item in categoryOptions" :key="item.code" :label="item.name" :value="item.code" />
+        </el-select>
       </el-form-item>
       <el-form-item label="关键词">
         <el-input v-model="form.keyword" placeholder="请输入" clearable style="width: 192px" />
@@ -127,6 +137,9 @@ onMounted(() => {
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
+        <el-button @click="onAdd('category')">新增环节</el-button>
+        <el-button @click="onDelete({}, 'category')">删除环节</el-button>
+        <el-button @click="onAdd('keyword')">新增关键词</el-button>
       </el-form-item>
     </el-form>
     <div class="table-container">
@@ -139,19 +152,7 @@ onMounted(() => {
       <el-table :data="tableData" border v-loading="tableLoading">
         <el-table-column prop="category" label="当前关注环节" show-overflow-tooltip />
         <el-table-column prop="keyword" label="爬取关键词" show-overflow-tooltip />
-        <el-table-column label="新增" fixed="right" width="220">
-          <template #default="scope">
-            <div class="table-operation">
-              <el-button text @click="onAdd(scope.row, 'category')" type="primary">
-                新增环节
-              </el-button>
-              <el-button text @click="onAdd(scope.row, 'keyword')" type="primary">
-                新增关键词
-              </el-button>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="编辑" fixed="right" width="220">
+        <el-table-column label="操作" fixed="right" width="340">
           <template #default="scope">
             <div class="table-operation">
               <el-button text @click="onEdit(scope.row, 'category')" type="primary">
@@ -159,15 +160,6 @@ onMounted(() => {
               </el-button>
               <el-button text @click="onEdit(scope.row, 'keyword')" type="primary">
                 编辑关键词
-              </el-button>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="删除" fixed="right" width="220">
-          <template #default="scope">
-            <div class="table-operation">
-              <el-button text @click="onDelete(scope.row, 'category')" type="primary">
-                删除环节
               </el-button>
               <el-button text @click="onDelete(scope.row, 'keyword')" type="primary">
                 删除关键词

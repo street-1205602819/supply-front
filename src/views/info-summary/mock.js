@@ -18,3 +18,22 @@ export const settingMock = {
     }
   ]
 }
+
+export const categoryListMock = [
+  {
+    code: 1,
+    name: '原材料和生产制造'
+  },
+  {
+    code: 2,
+    name: '物流和运输'
+  },
+  {
+    code: 3,
+    name: '销售和市场'
+  },
+  {
+    code: 4,
+    name: '消费者'
+  }
+]

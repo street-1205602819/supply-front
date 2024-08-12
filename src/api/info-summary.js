@@ -2,6 +2,8 @@ import { axiosGet } from '@/api/request'
 
 export const getList = (data) => axiosGet('/risk_analysis/tweet/list_keyword', data)
 
+export const getCategoryList = () => axiosGet('/risk_analysis/tweet/list_category')
+
 export const deleteCategory = (data) => axiosGet('/risk_analysis/tweet/delete/category', data)
 
 export const deleteKeyword = (data) => axiosGet('/risk_analysis/tweet/delete/keyword', data)
@@ -20,7 +22,8 @@ export const checkCrawling = () => axiosGet('/risk_analysis/tweet/check/status')
 
 export const userCrawling = () => axiosGet('/risk_analysis/tweet/start/user_crawling')
 
-
 export const stopCrawling = () => axiosGet('/risk_analysis/tweet/stop/crawling')
+
+
 
 
