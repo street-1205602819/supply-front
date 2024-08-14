@@ -6,7 +6,7 @@ import editDialog from './components/setting/editDialog.vue'
 // import { categoryListMock, settingMock } from './mock.js'
 const categoryOptions = ref([])
 const getCategoryOptions = async() => {
-  categoryOptions.value  = (await getCategoryList())?.data || []
+  categoryOptions.value  = await getCategoryList()
   form.categoryNo = categoryOptions.value[0].code
 }
 const form = reactive({
@@ -46,17 +46,17 @@ const onStartReptile = async field => {
       break;
   }
   const res = await fn()
-  ElMessage.success(res.data)
+  ElMessage.success(res)
 }
 
 const onCheck = async () => {
   const res = await checkCrawling()
-  ElMessage.success(res.data)
+  ElMessage.success(res)
 }
 
 const onStopReptile = async () => {
   const res = await stopCrawling()
-  ElMessage.success(res.data)
+  ElMessage.success(res)
 }
 
 const tableData = ref([])
