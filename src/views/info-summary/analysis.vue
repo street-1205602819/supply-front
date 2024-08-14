@@ -104,7 +104,7 @@ onMounted(async () => {
     </el-form>
     <div class="table-container">
       <el-table :data="tableData" border v-loading="tableLoading">
-        <el-table-column prop="seq" label="序号" width="60" show-overflow-tooltip>
+        <el-table-column prop="seq" label="序号" width="60" show-overflow-tooltip fixed="left">
           <template #default="scope">
             <div>{{ scope.$index + 1 }}</div>
           </template>
