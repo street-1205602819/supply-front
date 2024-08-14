@@ -90,6 +90,7 @@ const onDelete = async (row, field) => {
   }
   await fn(params)
   ElMessage.success('操作成功')
+  await getCategoryOptions()
   onSearch()
 }
 
@@ -113,7 +114,8 @@ const onAdd = (field) => {
   editDialogVisible.value = true
 }
 
-const onEditOk = () => {
+const onEditOk = async () => {
+  await getCategoryOptions()
   onSearch()
 }
 

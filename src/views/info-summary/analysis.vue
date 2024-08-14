@@ -1,15 +1,153 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { getCategoryList, getAnalysisList } from '@/api/info-summary'
+import { ElMessage } from 'element-plus'
+// import { categoryListMock, analysisMock } from './mock.js'
 
+const categoryOptions = ref([])
+const getCategoryOptions = async () => {
+  categoryOptions.value  = await getCategoryList()
+  form.categoryNo = categoryOptions.value[0].code
+}
+const form = reactive({
+  categoryNo: '',
+  keyword: '',
+  startDate: '',
+  endDate: '',
+  remark: ''
+})
 
+const tableLoading = ref(false)
+const onSearch = async (isClickSearch) => {
+  tableLoading.value = true
+  const res = await getAnalysisList({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
+  if (isClickSearch) {
+    ElMessage.success('查询成功')
+  }
+  tableLoading.value = false
+  tableData.value = res.data
+  pageInfo.total = res.total
+}
+
+const onReset = () => {
+  form.categoryNo = categoryOptions.value[0].code
+  form.keyword = ''
+  form.startDate = ''
+  form.endDate = ''
+  form.remark = ''
+}
+
+const tableData = ref([])
+const pageInfo = reactive({
+  total: 0,
+  pageSize: 20,
+  pageNum: 1
+})
+
+onMounted(async () => {
+  await getCategoryOptions()
+  onSearch()
+})
 </script>
 
 <template>
-  <div>
-    舆情梳理
+  <div class="container">
+    <el-form :inline="true" :model="form" class="form" label-position="top">
+      <el-form-item label="环节编码">
+        <el-select
+          v-model="form.categoryNo"
+          placeholder="请选择"
+          style="width: 192px"
+          fit-input-width
+          filterable
+        >
+          <el-option
+            v-for="item in categoryOptions"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="关键词">
+        <el-input v-model="form.keyword" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="开始时间">
+        <el-date-picker
+          v-model="form.startDate"
+          type="date"
+          placeholder="请选择"
+          style="width: 192px"
+          value-format="YYYY-MM-DD"
+        />
+      </el-form-item>
+      <el-form-item label="结束时间">
+        <el-date-picker
+          v-model="form.endDate"
+          type="date"
+          placeholder="请选择"
+          style="width: 192px"
+          value-format="YYYY-MM-DD"
+        />
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input v-model="form.remark" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="-" class="button-label">
+        <el-button @click="onSearch(true)">查询</el-button>
+        <el-button @click="onReset">重置</el-button>
+      </el-form-item>
+    </el-form>
+    <div class="table-container">
+      <el-table :data="tableData" border v-loading="tableLoading">
+        <el-table-column prop="seq" label="序号" width="60" show-overflow-tooltip>
+          <template #default="scope">
+            <div>{{ scope.$index + 1 }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="category" label="关注环节" show-overflow-tooltip width="180px" fixed="left" />
+        <el-table-column prop="keyword" label="关键词" show-overflow-tooltip fixed="left" />
+        <el-table-column prop="nickname" label="昵称" show-overflow-tooltip />
+        <el-table-column prop="screenName" label="用户名" show-overflow-tooltip />
+        <el-table-column prop="tweetCreatedAt" label="发布时间" show-overflow-tooltip width="180px" />
+        <el-table-column label="是否原创" width="180" show-overflow-tooltip>
+          <template #default="scope">
+            <div v-if="!scope.row.retweetFrom">原创</div>
+            <el-link v-else :href="scope.row.retweetFrom" target="_blank" type="primary">非原创</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column prop="chineseText" label="内容" show-overflow-tooltip width="280px" />
+        <el-table-column prop="viewCount" label="浏览量" show-overflow-tooltip />
+        <el-table-column prop="favoriteCount" label="收藏数" show-overflow-tooltip />
+        <el-table-column prop="replyCount" label="回复数" show-overflow-tooltip />
+        <el-table-column prop="retweetCount" label="转发数" show-overflow-tooltip />
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip fixed="right" width="120px" />
+      </el-table>
+      <el-pagination
+        layout="prev, pager, next, jumper"
+        :total="pageInfo.total"
+        @current-change="currentChange"
+        :page-size="20"
+      />
+    </div>
   </div>
 </template>
 <style scoped lang="scss">
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  flex-flow: column;
+}
 
+.table-container {
+  width: 100%;
+  height: 100%;
+  margin-top: 12px;
+}
 </style>
 

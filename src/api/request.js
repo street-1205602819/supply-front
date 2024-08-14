@@ -20,7 +20,7 @@ service.interceptors.response.use(
     }
     if (res.code !== 1) {
       ElMessage({
-        message: res.msg || res.message || 'Error',
+        message: res.data || 'Error',
         type: 'error',
         duration: 5 * 1000
       })

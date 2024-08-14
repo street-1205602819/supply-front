@@ -37,3 +37,51 @@ export const categoryListMock = [
     name: '消费者'
   }
 ]
+
+export const analysisMock = {
+  total: 25,
+  data: [
+    {
+      category: '原材料和生产制造',
+      keyword: 'tiktok',
+      nickname: '𝓯𝓻𝓮𝓪𝓴𝔂 𝕸𝖊𝖑 🦇🥩 #1 KORRA/PINKIE KISSER !!',
+      screenName: 'RealNygmaThe3rd',
+      tweetUrl: 'https://x.com/RealNygmaThe3rd/status/1822251164555252065',
+      tweetId: '1822251164555252065',
+      tweetCreatedAt: '2024-08-10 12:38:28',
+      retweetFrom: '',
+      chineseText: 'Tiktok 他妈的什么 https://t.co/vLeoeDXVEG',
+      viewCount: '4',
+      favoriteCount: '0',
+      replyCount: '0',
+      retweetCount: '0',
+      mediaType: 'photo',
+      location: 'A psychiatric hospital',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: 'https://pbs.twimg.com/media/GUnvxosWcAEc6kR.jpg',
+      remark: ''
+    },
+    {
+      category: '原材料和生产制造',
+      keyword: 'tiktok',
+      nickname: '𝓯𝓻𝓮𝓪𝓴𝔂 𝕸𝖊𝖑 🦇🥩 #1 KORRA/PINKIE KISSER !!',
+      screenName: 'RealNygmaThe3rd',
+      tweetUrl: 'https://x.com/RealNygmaThe3rd/status/1822251164555252065',
+      tweetId: '1822251164555252065',
+      tweetCreatedAt: '2024-08-10 12:38:28',
+      retweetFrom: 'https://juejin.cn/',
+      chineseText: 'Tiktok 他妈的什么 https://t.co/vLeoeDXVEG',
+      viewCount: '4',
+      favoriteCount: '0',
+      replyCount: '0',
+      retweetCount: '0',
+      mediaType: 'photo',
+      location: 'A psychiatric hospital',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: 'https://pbs.twimg.com/media/GUnvxosWcAEc6kR.jpg',
+      remark: ''
+    },
+  ]
+}
