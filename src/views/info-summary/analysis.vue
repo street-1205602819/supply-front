@@ -41,12 +41,21 @@ const onReset = () => {
   form.remark = ''
 }
 
+const onTw = () => {
+  window.open('https://inteltechniques.com/tools/Twitter.html', '_blank')
+}
+
 const tableData = ref([])
 const pageInfo = reactive({
   total: 0,
   pageSize: 20,
   pageNum: 1
 })
+
+const currentChange = (e) => {
+  pageInfo.pageNum = e
+  onSearch()
+}
 
 onMounted(async () => {
   await getCategoryOptions()
@@ -100,6 +109,7 @@ onMounted(async () => {
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
+        <el-button @click="onTw">个人推特精准查询</el-button>
       </el-form-item>
     </el-form>
     <div class="table-container">
