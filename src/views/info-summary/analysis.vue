@@ -2,6 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { getCategoryList, getAnalysisList } from '@/api/info-summary'
 import { ElMessage } from 'element-plus'
+import editRemark from './components/setting/editRemark.vue'
+import userList from './components/setting/userList.vue'
 // import { categoryListMock, analysisMock } from './mock.js'
 
 const categoryOptions = ref([])
@@ -55,6 +57,24 @@ const pageInfo = reactive({
 const currentChange = (e) => {
   pageInfo.pageNum = e
   onSearch()
+}
+
+const editVisible = ref(false)
+const editRemarkData = ref({})
+const onEdit = row => {
+  editRemarkData.value = row
+  editVisible.value = true
+}
+const onRemarkOk = () => {
+  editVisible.value = false
+  onSearch()
+}
+
+const tweetId = ref('')
+const userListVisible = ref(false)
+const onClickRetweetCount = row => {
+  userListVisible.value = true
+  tweetId.value = row.tweetId
 }
 
 onMounted(async () => {
@@ -134,8 +154,19 @@ onMounted(async () => {
         <el-table-column prop="viewCount" label="浏览量" show-overflow-tooltip />
         <el-table-column prop="favoriteCount" label="收藏数" show-overflow-tooltip />
         <el-table-column prop="replyCount" label="回复数" show-overflow-tooltip />
-        <el-table-column prop="retweetCount" label="转发数" show-overflow-tooltip />
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip fixed="right" width="120px" />
+        <el-table-column label="转发数" show-overflow-tooltip>
+          <template #default="scope">
+            <div class="table-button" @click="onClickRetweetCount(scope.row)">{{ scope.row.retweetCount }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="120px" />
+        <el-table-column label="操作" width="120px" fixed="right">
+          <template #default="scope">
+            <el-button text @click="onEdit(scope.row)" type="primary">
+              编辑备注
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         layout="prev, pager, next, jumper"
@@ -144,6 +175,8 @@ onMounted(async () => {
         :page-size="20"
       />
     </div>
+    <editRemark v-model:show="editVisible" :editData="editRemarkData" @ok="onRemarkOk" />
+    <userList v-model:show="userListVisible" :tweetId="tweetId" />
   </div>
 </template>
 <style scoped lang="scss">
@@ -158,6 +191,11 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   margin-top: 12px;
+}
+
+.table-button {
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>
 

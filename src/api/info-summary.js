@@ -26,4 +26,7 @@ export const stopCrawling = () => axiosGet('/risk_analysis/tweet/stop/crawling')
 
 export const getAnalysisList = (data) => axiosGet('/risk_analysis/tweet/list/keyword_tweet', data)
 
+export const updateAnalysisRemark = (data) => axiosGet('/risk_analysis/tweet/update/keyword_tweet', data)
+
+export const analysisUserList = (data) => axiosGet('/risk_analysis/tweet/list/retweet_user', data)
 

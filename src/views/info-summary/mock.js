@@ -60,7 +60,7 @@ export const analysisMock = {
       verifiedType: '--',
       videoUrl: '',
       coverImgUrls: 'https://pbs.twimg.com/media/GUnvxosWcAEc6kR.jpg',
-      remark: ''
+      remark: '123123'
     },
     {
       category: '原材料和生产制造',
