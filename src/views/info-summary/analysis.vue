@@ -150,7 +150,11 @@ onMounted(async () => {
             <el-link v-else :href="scope.row.retweetFrom" target="_blank" type="primary">非原创</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="chineseText" label="内容" show-overflow-tooltip width="280px" />
+        <el-table-column label="内容" show-overflow-tooltip width="280px">
+          <template #default="scope">
+            <el-link :href="scope.row.tweetUrl" target="_blank" type="primary">{{ scope.row.chineseText }}</el-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="viewCount" label="浏览量" show-overflow-tooltip />
         <el-table-column prop="favoriteCount" label="收藏数" show-overflow-tooltip />
         <el-table-column prop="replyCount" label="回复数" show-overflow-tooltip />
