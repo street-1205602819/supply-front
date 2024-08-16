@@ -19,7 +19,7 @@ const tabList = [
   }
 ]
 const componentIs = computed(() => {
-  switch(activeName.value) {
+  switch (activeName.value) {
     case 'analysis':
       return analysis
     case 'focus':
@@ -34,13 +34,27 @@ const componentIs = computed(() => {
 
 <template>
   <div>
+    <el-link type="primary" href="https://inteltechniques.com/tools/Twitter.html" target="_blank"
+      class="tab-link">个人推特精准查询</el-link>
     <el-tabs v-model="activeName">
-      <el-tab-pane :label="item.label" :name="item.name" v-for="item in tabList" :key="item.name"></el-tab-pane>
-      <component :is="componentIs" />
+      <el-tab-pane :label="item.label" :name="item.name" v-for="item in tabList" :key="item.name">
+      </el-tab-pane>
+      <div class="tab-content">
+        <component :is="componentIs" />
+      </div>
     </el-tabs>
   </div>
 </template>
 <style scoped lang="scss">
+.tab-link {
+  position: absolute;
+  right: 30px;
+  top: 90px;
+  z-index: 123123;
+}
 
+.tab-content {
+  height: calc(100vh - 155px);
+}
 </style>
 

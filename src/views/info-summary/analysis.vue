@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 import checkDialog from '@/components/checkDialog.vue'
 import editRemark from './components/setting/editRemark.vue'
 import userList from './components/setting/userList.vue'
-// import { categoryListMock, analysisMock } from './mock.js'
+import { categoryListMock, analysisMock } from './mock.js'
 
 const categoryOptions = ref([])
 const getCategoryOptions = async () => {
@@ -24,11 +24,12 @@ const form = reactive({
 const tableLoading = ref(false)
 const onSearch = async (isClickSearch) => {
   tableLoading.value = true
-  const res = await getAnalysisList({
-    page: pageInfo.pageNum,
-    pageSize: pageInfo.pageSize,
-    ...form
-  })
+  const res = analysisMock
+  // const res = await getAnalysisList({
+  //   page: pageInfo.pageNum,
+  //   pageSize: pageInfo.pageSize,
+  //   ...form
+  // })
   if (isClickSearch) {
     ElMessage.success('查询成功')
   }
@@ -44,10 +45,6 @@ const onReset = () => {
   form.endDate = ''
   form.remark = ''
   form.chineseText = ''
-}
-
-const onTw = () => {
-  window.open('https://inteltechniques.com/tools/Twitter.html', '_blank')
 }
 
 const tableData = ref([])
@@ -137,7 +134,6 @@ onMounted(async () => {
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
         <el-button @click="onReset">重置</el-button>
-        <el-button @click="onTw">个人推特精准查询</el-button>
       </el-form-item>
     </el-form>
     <div class="table-container">
@@ -204,6 +200,7 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   margin-top: 12px;
+  overflow: auto;
 }
 
 .table-button {
