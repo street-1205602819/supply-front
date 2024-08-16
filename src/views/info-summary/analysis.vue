@@ -1,14 +1,15 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getCategoryList, getAnalysisList } from '@/api/info-summary'
+import { getCategoryList, getAnalysisList, analysisDelete } from '@/api/info-summary'
 import { ElMessage } from 'element-plus'
+import checkDialog from '@/components/checkDialog.vue'
 import editRemark from './components/setting/editRemark.vue'
 import userList from './components/setting/userList.vue'
 // import { categoryListMock, analysisMock } from './mock.js'
 
 const categoryOptions = ref([])
 const getCategoryOptions = async () => {
-  categoryOptions.value  = await getCategoryList()
+  categoryOptions.value = await getCategoryList()
   form.categoryNo = categoryOptions.value[0].code
 }
 const form = reactive({
@@ -16,7 +17,8 @@ const form = reactive({
   keyword: '',
   startDate: '',
   endDate: '',
-  remark: ''
+  remark: '',
+  chineseText: '',
 })
 
 const tableLoading = ref(false)
@@ -41,6 +43,7 @@ const onReset = () => {
   form.startDate = ''
   form.endDate = ''
   form.remark = ''
+  form.chineseText = ''
 }
 
 const onTw = () => {
@@ -77,6 +80,29 @@ const onClickRetweetCount = row => {
   tweetId.value = row.tweetId
 }
 
+const selectData = ref([])
+const onSelect = (e) => {
+  selectData.value = e.map((item) => item.tweetId)
+}
+
+const checkVisible = ref(false)
+const onDelete = () => {
+  if (!selectData.value.length) {
+    ElMessage.error('请先选择要删除的数据')
+    return
+  }
+  checkVisible.value = true
+}
+
+const onCheckOk = async () => {
+  await analysisDelete({
+    tweetId: selectData.value.join(',')
+  })
+  ElMessage.success('操作成功')
+  checkVisible.value = false
+  onSearch()
+}
+
 onMounted(async () => {
   await getCategoryOptions()
   onSearch()
@@ -87,44 +113,26 @@ onMounted(async () => {
   <div class="container">
     <el-form :inline="true" :model="form" class="form" label-position="top">
       <el-form-item label="环节编码">
-        <el-select
-          v-model="form.categoryNo"
-          placeholder="请选择"
-          style="width: 192px"
-          fit-input-width
-          filterable
-        >
-          <el-option
-            v-for="item in categoryOptions"
-            :key="item.code"
-            :label="item.name"
-            :value="item.code"
-          />
+        <el-select v-model="form.categoryNo" placeholder="请选择" style="width: 192px" fit-input-width filterable>
+          <el-option v-for="item in categoryOptions" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
       </el-form-item>
       <el-form-item label="关键词">
         <el-input v-model="form.keyword" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="开始时间">
-        <el-date-picker
-          v-model="form.startDate"
-          type="date"
-          placeholder="请选择"
-          style="width: 192px"
-          value-format="YYYY-MM-DD"
-        />
+        <el-date-picker v-model="form.startDate" type="date" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="结束时间">
-        <el-date-picker
-          v-model="form.endDate"
-          type="date"
-          placeholder="请选择"
-          style="width: 192px"
-          value-format="YYYY-MM-DD"
-        />
+        <el-date-picker v-model="form.endDate" type="date" placeholder="请选择" style="width: 192px"
+          value-format="YYYY-MM-DD" />
       </el-form-item>
       <el-form-item label="备注">
         <el-input v-model="form.remark" placeholder="请输入" clearable style="width: 192px" />
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input v-model="form.chineseText" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
       <el-form-item label="-" class="button-label">
         <el-button @click="onSearch(true)">查询</el-button>
@@ -133,7 +141,11 @@ onMounted(async () => {
       </el-form-item>
     </el-form>
     <div class="table-container">
-      <el-table :data="tableData" border v-loading="tableLoading">
+      <div class="operation">
+        <el-button @click="onDelete" type="primary">批量删除</el-button>
+      </div>
+      <el-table :data="tableData" border v-loading="tableLoading" @selection-change="onSelect">
+        <el-table-column type="selection" width="50" fixed="left" />
         <el-table-column prop="seq" label="序号" width="60" show-overflow-tooltip fixed="left">
           <template #default="scope">
             <div>{{ scope.$index + 1 }}</div>
@@ -172,15 +184,12 @@ onMounted(async () => {
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        layout="prev, pager, next, jumper"
-        :total="pageInfo.total"
-        @current-change="currentChange"
-        :page-size="20"
-      />
+      <el-pagination layout="prev, pager, next, jumper" :total="pageInfo.total" @current-change="currentChange"
+        :page-size="20" />
     </div>
     <editRemark v-model:show="editVisible" :editData="editRemarkData" @ok="onRemarkOk" />
     <userList v-model:show="userListVisible" :tweetId="tweetId" />
+    <checkDialog v-model:show="checkVisible" @ok="onCheckOk" />
   </div>
 </template>
 <style scoped lang="scss">
@@ -200,6 +209,11 @@ onMounted(async () => {
 .table-button {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.operation {
+  margin-bottom: 8px;
+  width: 100%;
 }
 </style>
 
