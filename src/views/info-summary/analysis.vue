@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 import checkDialog from '@/components/checkDialog.vue'
 import editRemark from './components/setting/editRemark.vue'
 import userList from './components/setting/userList.vue'
-import { categoryListMock, analysisMock } from './mock.js'
+// import { categoryListMock, analysisMock } from './mock.js'
 
 const categoryOptions = ref([])
 const getCategoryOptions = async () => {
@@ -24,12 +24,12 @@ const form = reactive({
 const tableLoading = ref(false)
 const onSearch = async (isClickSearch) => {
   tableLoading.value = true
-  const res = analysisMock
-  // const res = await getAnalysisList({
-  //   page: pageInfo.pageNum,
-  //   pageSize: pageInfo.pageSize,
-  //   ...form
-  // })
+  // const res = analysisMock
+  const res = await getAnalysisList({
+    page: pageInfo.pageNum,
+    pageSize: pageInfo.pageSize,
+    ...form
+  })
   if (isClickSearch) {
     ElMessage.success('查询成功')
   }
