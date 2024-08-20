@@ -32,3 +32,7 @@ export const updateAnalysisRemark = (data) =>
 export const analysisUserList = (data) => axiosGet('/risk_analysis/tweet/list/retweet_user', data)
 
 export const analysisDelete = (data) => axiosGet('/risk_analysis/tweet/delete/keyword_tweet', data)
+
+export const focusUserList = (data) => axiosGet('/risk_analysis/tweet/list_user', data)
+
+export const focusAddUser = (data) => axiosGet('/risk_analysis/tweet/add/user', data)

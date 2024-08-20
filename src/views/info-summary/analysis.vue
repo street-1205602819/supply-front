@@ -3,8 +3,8 @@ import { ref, reactive, onMounted } from 'vue'
 import { getCategoryList, getAnalysisList, analysisDelete } from '@/api/info-summary'
 import { ElMessage } from 'element-plus'
 import checkDialog from '@/components/checkDialog.vue'
-import editRemark from './components/setting/editRemark.vue'
-import userList from './components/setting/userList.vue'
+import editRemark from './components/analysis/editRemark.vue'
+import userList from './components/analysis/userList.vue'
 // import { categoryListMock, analysisMock } from './mock.js'
 
 const categoryOptions = ref([])
