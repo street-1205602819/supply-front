@@ -442,3 +442,156 @@ export const analysisMock = {
     }
   ]
 }
+
+export const focusUserListMock = {
+  total: 17,
+  data: [
+    {
+      nickName: 'わい',
+      screenName: 'Znbke3anJ'
+    },
+    {
+      nickName: 'わい',
+      screenName: 'Znbke3anJ'
+    }
+  ]
+}
+
+export const focusListMock = {
+  total: 40,
+  data: [
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: '12312323132131232131231231231231231ow_JrainboW 我很好奇它尝起来是否像ow_JrainboW 我很好奇它尝起来是否像'
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+    {
+      nickname: 'わい',
+      screenName: 'Znbke3anJ',
+      tweetUrl: 'https://x.com/Znbke3anJ/status/1810632765198455057',
+      tweetId: '1810632765198455057',
+      tweetCreatedAt: '2024-07-09 11:11:05',
+      retweetFrom: '',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      viewCount: '64',
+      favoriteCount: '0',
+      replyCount: '1',
+      retweetCount: '0',
+      mediaType: 'text',
+      location: '関東',
+      verifiedType: '--',
+      videoUrl: '',
+      coverImgUrls: '',
+      remark: ''
+    },
+  ]
+}

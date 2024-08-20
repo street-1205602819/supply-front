@@ -35,4 +35,14 @@ export const analysisDelete = (data) => axiosGet('/risk_analysis/tweet/delete/ke
 
 export const focusUserList = (data) => axiosGet('/risk_analysis/tweet/list_user', data)
 
+export const focusUserCount = () => axiosGet('/risk_analysis/tweet/user_quantity')
+
 export const focusAddUser = (data) => axiosGet('/risk_analysis/tweet/add/user', data)
+
+export const focusDeleteUser = (data) => axiosGet('/risk_analysis/tweet/delete/user', data)
+
+export const focusInfo = (data) => axiosGet('/risk_analysis/tweet/list/user_tweet', data)
+
+export const focusDeleteInfo = (data) => axiosGet('/risk_analysis/tweet/delete/user_tweet', data)
+
+export const focusUpdateRemark = (data) => axiosGet('/risk_analysis/tweet/update/user_tweet', data)

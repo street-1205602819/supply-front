@@ -174,13 +174,6 @@ onMounted(async () => {
         <el-table-column prop="tradeWay" label="贸易方式" min-width="220" show-overflow-tooltip />
         <el-table-column prop="domesticAddress" label="境内地址" width="120" show-overflow-tooltip />
         <el-table-column prop="kilogram" label="第一计量" width="120" show-overflow-tooltip />
-        <!-- <el-table-column label="操作" width="90" fixed="right">
-          <template #default="scope">
-            <el-button text @click="onEdit(scope.row)" type="primary">
-              编辑
-            </el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
       <el-pagination layout="prev, pager, next, jumper" :total="pageInfo.total" @current-change="currentChange" :page-size="20" />
     </div>
