@@ -476,8 +476,9 @@ export const focusListMock = {
       location: '関東',
       verifiedType: '--',
       videoUrl: '',
-      coverImgUrls: '',
-      remark: '12312323132131232131231231231231231ow_JrainboW 我很好奇它尝起来是否像ow_JrainboW 我很好奇它尝起来是否像'
+      coverImgUrls: 'https://h5.sinaimg.cn/upload/1005/526/2021/08/23/text.png',
+      remark: '12312323132131232131231231231231231ow_JrainboW 我很好奇它尝起来是否像ow_JrainboW 我很好奇它尝起来是否像',
+      replyTo: '1123'
     },
     {
       nickname: 'わい',
@@ -494,7 +495,7 @@ export const focusListMock = {
       mediaType: 'text',
       location: '関東',
       verifiedType: '--',
-      videoUrl: '',
+      videoUrl: 'https://vdept3.bdstatic.com/mda-qhijwtdweijuvn7p/360p/h264/1724076445978263213/mda-qhijwtdweijuvn7p.mp4?v_from_s=hkapp-haokan-nanjing&auth_key=1724476828-0-0-4d60a6692c3ef7a06295f14b9b7d579a&bcevod_channel=searchbox_feed&pd=1&cr=0&cd=0&pt=3&logid=1228102200&vid=12016678394177211248&klogid=1228102200&abtest=87345_1',
       coverImgUrls: '',
       remark: ''
     },
@@ -543,7 +544,7 @@ export const focusListMock = {
       tweetId: '1810632765198455057',
       tweetCreatedAt: '2024-07-09 11:11:05',
       retweetFrom: '',
-      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布丁🫣',
+      chineseText: '@yellow_JrainboW 我很好奇它尝起来是否像布我很好奇它尝起来是否像布丁我很好奇它尝起来是否像布丁我很好奇它尝起来是否像布丁我很好奇它尝起来是否像布丁我很好奇它尝起来是否像布丁我很好奇它尝起来是否像布丁🫣',
       viewCount: '64',
       favoriteCount: '0',
       replyCount: '1',

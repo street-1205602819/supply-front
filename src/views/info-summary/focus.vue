@@ -1,15 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import {
-  focusAddUser,
-  focusUserCount,
-  focusInfo,
-  focusDeleteInfo
-} from '@/api/info-summary'
+import { focusAddUser, focusUserCount, focusInfo, focusDeleteInfo } from '@/api/info-summary'
 import userList from './components/focus/userList.vue'
 import editRemark from './components/focus/editRemark.vue'
 import { ElMessage } from 'element-plus'
-// import { focusListMock } from './mock'
 
 const userCount = ref(0)
 const userListVisible = ref(false)
@@ -69,7 +63,6 @@ const onSearch = async (isRefresh) => {
     pageSize: pageInfo.pageSize,
     ...form
   })
-  // const res = focusListMock
   if (isRefresh) {
     list.value = res.data
   } else {
@@ -91,7 +84,7 @@ const onDelete = async (info) => {
 
 const editVisible = ref(false)
 const editRemarkData = ref({})
-const onEdit = item => {
+const onEdit = (item) => {
   editVisible.value = true
   editRemarkData.value = JSON.parse(JSON.stringify(item))
 }
@@ -154,27 +147,50 @@ onMounted(async () => {
         </el-form-item>
       </el-form>
       <ul v-infinite-scroll="onLoad" class="info-list" :infinite-scroll-distance="200">
-        <div class="info-img"></div>
         <li v-for="(item, index) in list" :key="index" class="info-list-item">
           <div class="info-list-item-header">
-            <div>{{ item.nickname }}（{{ item.screenName }}）</div>
-            <div class="info-operation">
+            <div class="info-list-item-info">
+              <div class="info-list-item-name">{{ item.nickname }}</div>
+              <div class="info-list-item-user">{{ item.location }}</div>
+              <div class="info-list-item-user">{{ item.tweetCreatedAt }}</div>
+            </div>
+            <div class="info-list-item-operation">
               <el-button @click="onDelete(item)" text type="primary">删除</el-button>
               <el-button @click="onEdit(item)" text type="primary">编辑备注</el-button>
             </div>
           </div>
-          <p class="info-time">{{ item.tweetCreatedAt }} （{{ item.remark }}）</p>
-          <el-popover
-            placement="bottom"
-            title=""
-            :width="500"
-            trigger="click"
-            :content="item.chineseText"
-          >
-            <template #reference>
-              <p class="info-content">{{ item.chineseText }}</p>
-            </template>
-          </el-popover>
+          <div class="info-list-item-reply" v-if="item.replyTo">{{ item.replyTo }}</div>
+          <div class="info-list-item-content">
+            {{ item.chineseText }}<el-link type="primary" target="_blank" :href="item.tweetUrl">原链接</el-link>
+            <div>
+              <el-link type="primary" target="_blank" :href="item.coverImgUrls || item.videoUrl">图片链接/视频链接</el-link>
+            </div>
+          </div>
+          <div class="info-list-item-deatil">
+            <el-image
+              class="info-list-item-img"
+              v-if="item.coverImgUrls"
+              :src="item.coverImgUrls"
+              fit="contain"
+            />
+            <video controls v-if="item.videoUrl" width="400">
+              <source :src="item.videoUrl" />
+            </video>
+          </div>
+        <div class="info-list-item-num">
+          <div class="info-list-item-count">
+            <i class="iconfont info-list-item-icon icon-31zhuanfa" />
+            {{ item.retweetCount }}
+          </div>
+          <div class="info-list-item-count">
+            <i class="iconfont info-list-item-icon icon-huifu" />
+            {{ item.replyCount }}
+          </div>
+          <div class="info-list-item-count">
+            <i class="iconfont info-list-item-icon icon-dianzan" />
+            {{ item.retweetCount }}
+          </div>
+        </div>
         </li>
       </ul>
     </div>
@@ -188,7 +204,7 @@ onMounted(async () => {
 }
 
 .user-container {
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
 .user-button {
@@ -225,52 +241,71 @@ onMounted(async () => {
   border: 1px solid var(--el-border-color);
   border-radius: 4px;
   background-color: #f1f2f5;
-  width: calc(50% - 8px);
+  width: 100%;
   padding: 12px;
   list-style: none;
-  height: 200px;
 
   &-header {
     display: flex;
     justify-content: space-between;
   }
-}
 
-.info-img {
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  background: url('https://h5.sinaimg.cn/upload/1005/526/2021/08/23/text.png');
-  right: 8px;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: calc(50% - 8px);
-  height: 100px;
-}
+  &-info {
+    display: flex;
+    align-items: center;
+  }
 
-.info-list-item:nth-child(2n + 1) {
-  position: relative;
-  top: 100px;
-}
+  &-name {
+    font-size: 20px;
+    font-weight: 500;
+  }
 
-.info-title {
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
+  &-user {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #939393;
+  }
 
-.info-time {
-  margin-bottom: 6px;
-  color: #939393;
-  font-size: 12px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
+  &-operation {
+    display: flex;
+    align-items: center;
+  }
 
-.info-operation {
-  display: flex;
-  align-items: center;
+  &-reply {
+    margin-top: 12px;
+  }
+
+  &-content {
+    margin-top: 12px;
+  }
+
+  &-deatil {
+    margin-top: 12px;
+  }
+
+  &-img, &-video {
+    height: 200px;
+    width: 400px;
+  }
+
+  &-num {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  &-count {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: #939393;
+  
+    // justify-content: center;
+  }
+
+  &-icon {
+    margin-right: 4px;
+  }
 }
 
 ::v-deep .el-button--primary {
