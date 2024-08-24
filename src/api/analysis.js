@@ -10,3 +10,9 @@ export const getAnalysisList = (data) =>
 
 export const deleteRecord = (data) =>
   axiosGet('/risk_analysis/dependency/analysis/delete/record', data)
+
+export const getTradeCountry = (data) =>
+  axiosGet('/risk_analysis/dependency/analysis/list/trade_country', data)
+
+export const getAnalysisSummary = (data) =>
+  axiosGet('/risk_analysis/dependency/analysis/list/graph_data', data)

@@ -28,9 +28,9 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
-          path: 'analysis_list',
-          name: 'analysis_list',
-          component: () => import('@/views/analysis/analysis_list.vue'),
+          path: 'analysis_info',
+          name: 'analysis_info',
+          component: () => import('@/views/analysis/index.vue'),
           meta: { title: '依赖性分析' }
         }
       ]

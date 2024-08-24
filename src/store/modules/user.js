@@ -16,7 +16,7 @@ const state = {
       children: [
         {
           name: '',
-          route: 'analysis_list'
+          route: 'analysis_info'
         }
       ]
     },
