@@ -3,16 +3,16 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import uploadDialog from './components/uploadDialog.vue'
 import checkDialog from '@/components/checkDialog.vue'
 import { getMenuValue } from '@/assets/utils'
-import { getTradeWay, getDomesticAddress, getAnalysisList, deleteRecord } from '@/api/analysis'
+import { getTradeWay, getDomesticAddress, getAnalysisList, deleteRecord, getTradeCountry } from '@/api/analysis'
 import { ElMessage } from 'element-plus'
 const form = reactive({
-  tradeType: '',
+  tradeType: 2,
   commodity: '',
-  tradeCountry: '',
-  tradeWayCode: '',
-  domesticAddressCode: '',
+  tradeCountry: '美国',
+  tradeWayCode: 10,
+  domesticAddressCode: 14,
   startDate: '',
-  endDate: '',
+  endDate: ''
 })
 const tradeTypeList = [
   {
@@ -25,17 +25,26 @@ const tradeTypeList = [
   }
 ]
 
+const tradeCountryOptions = ref([])
+const getTradeCountryOptions = async (e) => {
+  tradeCountryOptions.value = await getTradeCountry({
+    tradeCountry: e || '美国'
+  })
+}
 const tradeWayCodeList = ref([])
 const domesticAddressCodeList = ref([])
 const getTradeWayCodeList = async () => {
   tradeWayCodeList.value = await getTradeWay()
+  form.tradeWayCode = 10
 }
 const getDomesticAddressCodeList = async () => {
   domesticAddressCodeList.value = await getDomesticAddress()
+  form.domesticAddressCode = 14
 }
 const getList = async () => {
   await getTradeWayCodeList()
   await getDomesticAddressCodeList()
+  await getTradeCountryOptions()
 }
 
 const tableData = ref([])
@@ -99,12 +108,12 @@ const onCheckOk = async () => {
 
 const onReset = () => {
   form.commodity = ''
-  form.domesticAddressCode = ''
+  form.domesticAddressCode = 14
   form.endDate = ''
   form.startDate = ''
-  form.tradeCountry = ''
-  form.tradeType = ''
-  form.tradeWayCode = ''
+  form.tradeCountry = '美国'
+  form.tradeType = 2
+  form.tradeWayCode = 10
 }
 
 const tableLoading = ref(false)
@@ -125,8 +134,17 @@ onMounted(async () => {
       <el-form-item label="商品名称">
         <el-input v-model="form.commodity" placeholder="请输入" clearable style="width: 192px" />
       </el-form-item>
-      <el-form-item label="贸易国家">
-        <el-input v-model="form.tradeCountry" placeholder="请输入" clearable style="width: 192px" />
+     <el-form-item label="贸易国家">
+        <el-select
+          v-model="form.tradeCountry"
+          filterable
+          remote
+          placeholder="请输入"
+          :remote-method="getTradeCountryOptions"
+          style="width: 192px"
+        >
+          <el-option v-for="item in tradeCountryOptions" :key="item" :label="item" :value="item" />
+        </el-select>
       </el-form-item>
       <el-form-item label="贸易方式">
         <el-select v-model="form.tradeWayCode" placeholder="请选择" style="width: 192px" fit-input-width filterable>

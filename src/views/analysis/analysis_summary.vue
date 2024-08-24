@@ -10,11 +10,11 @@ import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 
 const form = reactive({
-  tradeType: 1,
+  tradeType: 2,
   commodity: '',
-  tradeCountry: '',
-  tradeWayCode: '',
-  domesticAddressCode: '',
+  tradeCountry: '美国',
+  tradeWayCode: 10,
+  domesticAddressCode: 14,
   startDate: '',
   endDate: ''
 })
@@ -32,19 +32,18 @@ const tradeTypeList = [
 const tradeCountryOptions = ref([])
 const getTradeCountryOptions = async (e) => {
   tradeCountryOptions.value = await getTradeCountry({
-    tradeCountry: e
+    tradeCountry: e || '美国'
   })
-  form.tradeCountry = tradeCountryOptions.value[0]
 }
 const tradeWayCodeList = ref([])
 const domesticAddressCodeList = ref([])
 const getTradeWayCodeList = async () => {
   tradeWayCodeList.value = await getTradeWay()
-  form.tradeWayCode = tradeWayCodeList.value[0].code
+  form.tradeWayCode = 10
 }
 const getDomesticAddressCodeList = async () => {
   domesticAddressCodeList.value = await getDomesticAddress()
-  form.domesticAddressCode = domesticAddressCodeList.value[0].code
+  form.domesticAddressCode = 14
 }
 const getList = async () => {
   await getTradeWayCodeList()
@@ -101,12 +100,12 @@ const currentChange = (e) => {
 
 const onReset = () => {
   form.commodity = ''
-  form.domesticAddressCode = domesticAddressCodeList.value[0].code
+  form.domesticAddressCode = 14
   form.endDate = ''
   form.startDate = ''
-  form.tradeCountry = tradeCountryOptions.value[0]
-  form.tradeType = 1
-  form.tradeWayCode = tradeWayCodeList.value[0].code
+  form.tradeCountry = '美国'
+  form.tradeType = 2
+  form.tradeWayCode = 10
 }
 
 onMounted(async () => {
@@ -210,7 +209,12 @@ onMounted(async () => {
     </el-form>
     <div class="table-container">
       <div v-for="(item, index) in tableData.length" class="info-chart" :key="index"></div>
-      <el-pagination layout="prev, pager, next, jumper" :total="pageInfo.total" @current-change="currentChange" :page-size="10" />
+      <el-pagination
+        layout="prev, pager, next, jumper"
+        :total="pageInfo.total"
+        @current-change="currentChange"
+        :page-size="10"
+      />
     </div>
   </div>
 </template>

@@ -27,7 +27,7 @@ const onAdd = async () => {
 const form = reactive({
   nickName: '',
   screenName: '',
-  chinesText: '',
+  chineseText: '',
   startDate: '',
   endDate: '',
   remark: ''
@@ -36,7 +36,7 @@ const form = reactive({
 const onReset = () => {
   form.nickName = ''
   form.screenName = ''
-  form.chinesText = ''
+  form.chineseText = ''
   form.startDate = ''
   form.endDate = ''
   form.remark = ''
@@ -118,7 +118,7 @@ onMounted(async () => {
           <el-input v-model="form.screenName" placeholder="请输入" clearable style="width: 192px" />
         </el-form-item>
         <el-form-item label="内容">
-          <el-input v-model="form.chinesText" placeholder="请输入" clearable style="width: 192px" />
+          <el-input v-model="form.chineseText" placeholder="请输入" clearable style="width: 192px" />
         </el-form-item>
         <el-form-item label="开始时间">
           <el-date-picker

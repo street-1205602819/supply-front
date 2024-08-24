@@ -9,10 +9,10 @@ const activeName = ref('analysis')
   <div>
     <el-tabs v-model="activeName">
       <el-tab-pane label="数据详情" name="analysis">
-        <analysisList />
+        <analysisList v-if="activeName == 'analysis'" />
       </el-tab-pane>
       <el-tab-pane label="数据概览" name="analysisSummary">
-        <analysisSummary />
+        <analysisSummary  v-if="activeName == 'analysisSummary'"  />
       </el-tab-pane>
     </el-tabs>
   </div>
