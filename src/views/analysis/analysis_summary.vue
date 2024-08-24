@@ -58,6 +58,9 @@ const pageInfo = reactive({
   pageNum: 1
 })
 const onSearch = async (isClickSearch) => {
+    if (isClickSearch) {
+      pageInfo.pageNum = 1
+    }
   const res = await getAnalysisSummary({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
@@ -217,6 +220,7 @@ onMounted(async () => {
         :total="pageInfo.total"
         @current-change="currentChange"
         :page-size="10"
+        v-model:current-page="pageInfo.pageNum"
       />
     </div>
   </div>
