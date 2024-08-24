@@ -54,7 +54,7 @@ const getList = async () => {
 const tableData = ref([])
 const pageInfo = reactive({
   total: 0,
-  pageSize: 20,
+  pageSize: 10,
   pageNum: 1
 })
 const onSearch = async (isClickSearch) => {
@@ -86,7 +86,10 @@ const onSearch = async (isClickSearch) => {
         series: [
           {
             type: 'line',
-            data: chartData.details.map((item) => item.total)
+            data: chartData.details.map((item) => item.total),
+            label: {
+              show: true
+            }
           }
         ]
       })
