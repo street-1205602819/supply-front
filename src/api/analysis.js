@@ -16,3 +16,6 @@ export const getTradeCountry = (data) =>
 
 export const getAnalysisSummary = (data) =>
   axiosGet('/risk_analysis/dependency/analysis/list/graph_data', data)
+
+export const getDependenceList = (data) =>
+  axiosGet('/risk_analysis/dependency/analysis/list/commodity_analysis', data)
