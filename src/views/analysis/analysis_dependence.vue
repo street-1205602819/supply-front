@@ -26,7 +26,6 @@ const getTradeWayCodeList = async () => {
 }
 const getDomesticAddressCodeList = async () => {
   domesticAddressCodeList.value = await getDomesticAddress()
-  form.domesticAddressCode = 14
 }
 const getList = async () => {
   await getTradeCountryOptions()
@@ -52,6 +51,7 @@ const onSearch = async (isClickSearch) => {
     ...form
   })
   if (isClickSearch) {
+    tableText.value = `${dayjs(form.startDate).format('YYYY.MM')}至${dayjs(form.endDate).format('YYYY.MM')}内对美国的物品进口依赖性`
     ElMessage.success('查询成功')
   }
   tableLoading.value = false
@@ -72,6 +72,8 @@ const onReset = () => {
   form.startDate = dayjs().subtract(1, 'year').format('YYYY-MM')
   form.endDate = dayjs().format('YYYY-MM')
 }
+
+const tableText = ref(`${dayjs(form.startDate).format('YYYY.MM')}至${dayjs(form.endDate).format('YYYY.MM')}内对美国的物品进口依赖性`)
 
 onMounted(async () => {
   await getList()
@@ -161,7 +163,7 @@ onMounted(async () => {
         <el-table-column prop="commodity" label="商品" show-overflow-tooltip />
         <el-table-column
           prop="percentage"
-          label="（时间段）内对（目标国家）的物品进口依赖性"
+          :label="tableText"
           show-overflow-tooltip
         />
       </el-table>
