@@ -18,6 +18,16 @@ const form = reactive({
   startDate: '',
   endDate: ''
 })
+
+const searchForm = reactive({
+  tradeType: 2,
+  commodity: '',
+  tradeCountry: '美国',
+  tradeWayCode: 10,
+  domesticAddressCode: 14,
+  startDate: '',
+  endDate: ''
+})
 const tradeTypeList = [
   {
     label: '进口',
@@ -58,13 +68,20 @@ const pageInfo = reactive({
   pageNum: 1
 })
 const onSearch = async (isClickSearch) => {
-    if (isClickSearch) {
-      pageInfo.pageNum = 1
-    }
+  if (isClickSearch) {
+    pageInfo.pageNum = 1
+    searchForm.tradeType = form.tradeType
+    searchForm.commodity = form.commodity
+    searchForm.tradeCountry = form.tradeCountry
+    searchForm.tradeWayCode = form.tradeWayCode
+    searchForm.domesticAddressCode = form.domesticAddressCode
+    searchForm.startDate = form.startDate
+    searchForm.endDate = form.endDate
+  }
   const res = await getAnalysisSummary({
     page: pageInfo.pageNum,
     pageSize: pageInfo.pageSize,
-    ...form
+    ...searchForm
   })
   if (isClickSearch) {
     ElMessage.success('查询成功')
