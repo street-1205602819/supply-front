@@ -192,6 +192,7 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   margin-top: 12px;
+  overflow: auto;
 }
 
 .table-operation {
